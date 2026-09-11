@@ -1,0 +1,929 @@
+{
+  "schemaVersion": 1,
+  "snapshotDate": "2026-09-04",
+  "disclaimer": "Private research inventory. Survey readiness is not a Red Dot score or finding of wrongdoing.",
+  "totals": {
+    "candidates": 50,
+    "deepReview": 4,
+    "surveyed": 46,
+    "noResult": 0
+  },
+  "candidates": [
+    {
+      "rank": 1,
+      "id": "grand-island-ne",
+      "place": "Grand Island, Nebraska",
+      "agency": "Grand Island Police Department",
+      "state": "NE",
+      "system": "Flock Safety ALPR",
+      "sourceCount": 4,
+      "sourceUrls": [
+        "https://www.grand-island.com/o/gipd/page/automatic-license-plate-readers",
+        "https://ncc.nebraska.gov/automatic-license-plate-reader-resources",
+        "https://nebraskalegislature.gov/laws/statutes.php?statute=60-3204",
+        "https://transparency.flocksafety.com/grand-island-ne-pd"
+      ],
+      "authority": "FOUND",
+      "observed": "SIGNAL",
+      "surveyReadiness": 74,
+      "status": "DEEP REVIEW",
+      "leadReason": "A nationwide access population requires reconciliation with a specific-investigation standard, documented outside-release controls and recurring audit requirements.",
+      "nextAction": "Extract controls, metrics, discrepancies and request routes."
+    },
+    {
+      "rank": 2,
+      "id": "pflugerville-tx",
+      "place": "Pflugerville, Texas",
+      "agency": "Pflugerville Police Department",
+      "state": "TX",
+      "system": "Flock Safety ALPR",
+      "sourceCount": 3,
+      "sourceUrls": [
+        "https://www.techbrew.com/stories/flock-pflugerville-texas-data-outside-agencies",
+        "https://www.pflugervilletx.gov/safety-cameras-and-automated-license-plate-readers?contentId=51c89c47-3545-4c81-8b91-d6c0b607938e",
+        "https://cbsaustin.com/news/local/pflugerville-turns-off-flock-cameras-ahead-of-meeting-after-data-access-issue-discovered"
+      ],
+      "authority": "FOUND",
+      "observed": "SIGNAL",
+      "surveyReadiness": 67,
+      "status": "DEEP REVIEW",
+      "leadReason": "The city reportedly understood its sharing universe to be far smaller than the population of outside organizations appearing in network-search records.",
+      "nextAction": "Extract controls, metrics, discrepancies and request routes."
+    },
+    {
+      "rank": 3,
+      "id": "manvel-tx",
+      "place": "Manvel, Texas",
+      "agency": "Manvel Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.houstonchronicle.com/news/houston-texas/trending/article/manvel-mayor-reverses-support-for-flock-22409070.php"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "The mayor reversed his support after questions about data use, cybersecurity and contract transparency were not resolved to his satisfaction.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 4,
+      "id": "el-cajon-ca",
+      "place": "El Cajon, California",
+      "agency": "El Cajon Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://oag.ca.gov/news/press-releases/attorney-general-bonta-continues-legal-challenge-stop-el-cajon-illegally-sharing"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "California's attorney general alleges the city continued sharing ALPR data with federal and out-of-state agencies despite state-law restrictions and repeated warnings.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 5,
+      "id": "ventura-county-ca",
+      "place": "Ventura County, California",
+      "agency": "Ventura County Sheriff's Office",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.cbsnews.com/losangeles/news/flock-license-plate-readers-shared-data-with-out-of-state-federal-agencies/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "An agency audit found out-of-state and federal access after the department believed National Lookup had been disabled to comply with California law.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 6,
+      "id": "san-francisco-ca",
+      "place": "San Francisco, California",
+      "agency": "San Francisco Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.sfchronicle.com/bayarea/article/sfpd-flock-license-plate-reader-data-searches-22310416.php"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "SFPD cut off a regional intelligence center's access after an audit identified improper searches performed for federal and out-of-state agencies.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 7,
+      "id": "renton-wa",
+      "place": "Renton, Washington",
+      "agency": "Renton Police Department",
+      "state": "WA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://jsis.washington.edu/humanrights/2025/10/21/leaving-the-door-wide-open/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Network audits showed Border Patrol searches even though the corresponding sharing report did not show explicit authorization to that federal agency.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 8,
+      "id": "denver-co",
+      "place": "Denver, Colorado",
+      "agency": "Denver Police Department",
+      "state": "CO",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://coloradonewsline.com/2025/08/06/immigration-denver-flock-camera/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Audit logs exposed frequent immigration-related searches of Denver's network; the city later decided not to renew Flock and moved to a different vendor.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 9,
+      "id": "boulder-co",
+      "place": "Boulder, Colorado",
+      "agency": "Boulder Police Department",
+      "state": "CO",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://bouldercolorado.gov/services/flock-safety-cameras-and-boulder-police-department"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Boulder says it disabled National Lookup to keep outside searches within agencies governed by the same laws, creating a clean before-and-after configuration trail to examine.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 10,
+      "id": "tempe-az",
+      "place": "Tempe, Arizona",
+      "agency": "Tempe Police Department",
+      "state": "AZ",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.businessinsider.com/tempe-shuts-down-flock-license-plate-readers-over-misuse-concerns-2026-8"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Tempe shut down its 33-camera system after concluding that privacy, misuse risk and public trust outweighed continued use despite audits finding no internal misuse.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 11,
+      "id": "goodyear-az",
+      "place": "Goodyear, Arizona",
+      "agency": "Goodyear Police Department",
+      "state": "AZ",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://ktar.com/arizona-technology-news/flock-cameras-privacy-cities"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "A criminal investigation began after an internal-affairs audit flagged potential officer misuse of the Flock system.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 12,
+      "id": "hall-county-ga",
+      "place": "Hall County, Georgia",
+      "agency": "Hall County Sheriff's Office",
+      "state": "GA",
+      "system": "Flock Safety ALPR",
+      "sourceCount": 4,
+      "sourceUrls": [
+        "https://www.fox5atlanta.com/news/audit-catches-hall-deputy-running-unauthorized-flock-searches",
+        "https://www.fox5atlanta.com/news/hall-county-flock-audit-exposes-more-unauthorized-searches",
+        "https://www.cbsnews.com/atlanta/news/3-more-hall-county-deputies-resign-as-agency-continues-flock-camera-system-audit-sheriff-says/",
+        "https://www.flocksafety.com/legal/lpr-policy"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 58,
+      "status": "SURVEYED",
+      "leadReason": "A self-initiated audit expanded into multiple firings and resignations after searches were identified as unrelated to legitimate law-enforcement purposes.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 13,
+      "id": "coweta-county-ga",
+      "place": "Coweta County, Georgia",
+      "agency": "Coweta County Sheriff's Office",
+      "state": "GA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.wsbtv.com/news/local/coweta-county/3-former-sheriffs-office-employees-accused-misusing-flock-safety-system-after-audit/SJDDJ7KLBRE7BMVSXA2JU2HPGM/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Three former employees came under investigation after a self-initiated audit flagged their Flock accounts for potential misuse.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 14,
+      "id": "jackson-county-in",
+      "place": "Jackson County, Indiana",
+      "agency": "Jackson County Sheriff's Department",
+      "state": "IN",
+      "system": "Flock Safety ALPR",
+      "sourceCount": 3,
+      "sourceUrls": [
+        "https://www.wthitv.com/2026/08/31/former-indiana-deputy-charged-after-2055-flock-searches-same-license-plate/",
+        "https://www.wlky.com/article/former-jackson-county-deputy-flock-camera-searches-misconduct/73574567",
+        "https://www.flocksafety.com/legal/lpr-policy"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 49,
+      "status": "SURVEYED",
+      "leadReason": "A former deputy faces criminal charges after an audit reportedly found more than 2,000 searches of one personal plate using a false work justification.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 15,
+      "id": "homer-glen-il",
+      "place": "Homer Glen, Illinois",
+      "agency": "Village cameras / Will County Sheriff's Office",
+      "state": "IL",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.homerglenil.org/m/newsflash/Home/Detail/990"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "The village suspended its Flock cameras pending the outcome of an investigation involving a county deputy and review of the sheriff's ALPR protocol.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 16,
+      "id": "highland-heights-oh",
+      "place": "Highland Heights, Ohio",
+      "agency": "Highland Heights Police Department",
+      "state": "OH",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.cleveland19.com/2026/08/21/northeast-ohio-dispatcher-accused-unauthorized-searches-flock-cameras/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "A dispatcher resigned after the department alleged thousands of improper searches over two years and then imposed new rules for every authorized user.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 17,
+      "id": "milwaukee-wi",
+      "place": "Milwaukee, Wisconsin",
+      "agency": "Milwaukee Police Department",
+      "state": "WI",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://urbanmilwaukee.com/2026/03/15/police-misuse-of-flock-surveillance-becoming-statewide-issue/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported personal-use cases created a broader accountability question about access controls, audit frequency and consequences across Wisconsin agencies.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 18,
+      "id": "sumter-county-fl",
+      "place": "Sumter County, Florida",
+      "agency": "Sumter County Sheriff's Office",
+      "state": "FL",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.clickorlando.com/news/local/2026/07/24/central-florida-sheriff-suspends-flock-cameras-after-scandal-involving-detective/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "The sheriff suspended the entire Flock system and ordered a complete audit after a detective was arrested and terminated over alleged personal searches.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 19,
+      "id": "brevard-county-fl",
+      "place": "Brevard County, Florida",
+      "agency": "Brevard County Sheriff's Office",
+      "state": "FL",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://people.com/deputy-of-the-year-resigns-after-alleged-flock-search-misconduct-12070813"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "An internal investigation substantiated an unjustified off-duty plate search involving a deputy's former partner and contributed to his resignation.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 20,
+      "id": "brunswick-county-nc",
+      "place": "Brunswick County, North Carolina",
+      "agency": "Brunswick County Sheriff's Office",
+      "state": "NC",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.wect.com/2026/09/01/brunswick-co-sheriffs-office-employee-resigns-amid-investigation-into-flock-system-misuse/?outputType=amp"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "An employee resigned and a state investigation began after a routine audit flagged alleged misuse; the agency is now building a transparency portal.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 21,
+      "id": "norfolk-va",
+      "place": "Norfolk, Virginia",
+      "agency": "Norfolk Police Department",
+      "state": "VA",
+      "system": "Flock Safety ALPR",
+      "sourceCount": 5,
+      "sourceUrls": [
+        "https://www.aclu.org/cases/schmidt-v-norfolk",
+        "https://www.norfolk.gov/5967/Cameras",
+        "https://ij.org/case/norfolk-virginia-camera-surveillance/",
+        "https://www.whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet",
+        "https://www.flocksafety.com/legal/lpr-policy"
+      ],
+      "authority": "FOUND",
+      "observed": "SIGNAL",
+      "surveyReadiness": 74,
+      "status": "DEEP REVIEW",
+      "leadReason": "An ongoing constitutional challenge tests whether a dense municipal network of more than 170 cameras permits retrospective movement tracking inconsistent with the Fourth Amendment.",
+      "nextAction": "Extract controls, metrics, discrepancies and request routes."
+    },
+    {
+      "rank": 22,
+      "id": "new-bedford-ma",
+      "place": "New Bedford, Massachusetts",
+      "agency": "New Bedford Police Department",
+      "state": "MA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://newbedfordlight.org/new-bedford-police-officer-accused-of-using-flock-cameras-to-track-and-follow-ex-romantic-partner/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "The department suspended its entire Flock system after an officer was accused of using it to track a former romantic partner.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 23,
+      "id": "milford-ct",
+      "place": "Milford, Connecticut",
+      "agency": "Milford Police Department",
+      "state": "CT",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://ctmirror.org/2026/08/07/flock-cameras-milford-connecticut/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "After sustained public opposition, city officials imposed a moratorium and created a review process while restricting where license-plate readers can operate.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 24,
+      "id": "clawson-mi",
+      "place": "Clawson, Michigan",
+      "agency": "Clawson Police Department",
+      "state": "MI",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.fox2detroit.com/news/clawson-officer-resigns-after-city-council-rejects-flock-cameras"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "The city council rejected renewal after a public debate over privacy, security and oversight, producing a sharp institutional dispute over the cameras' value and controls.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 25,
+      "id": "syracuse-ny",
+      "place": "Syracuse, New York",
+      "agency": "Syracuse Police Department",
+      "state": "NY",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://centralcurrent.org/federal-immigration-agents-accessed-syracuse-drivers-data-through-secret-flock-safety-deal/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "The department's data was reportedly included in 175 CBP-related searches through a national access arrangement that did not require Syracuse to share directly with the federal agency.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 26,
+      "id": "oxnard-ca",
+      "place": "Oxnard, California",
+      "agency": "Oxnard Police Department",
+      "state": "CA",
+      "system": "Flock Safety ALPR",
+      "sourceCount": 3,
+      "sourceUrls": [
+        "https://www.oxnard.gov/pd-news/news-release-oxnard-police-department-suspends-use-of-flock-safety-automated-license-plate-readers-02-27-26",
+        "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.90.55.&lawCode=CIV",
+        "https://www.flocksafety.com/legal/lpr-policy"
+      ],
+      "authority": "FOUND",
+      "observed": "SIGNAL",
+      "surveyReadiness": 67,
+      "status": "DEEP REVIEW",
+      "leadReason": "Official audit reported California-only settings alongside vendor-enabled nationwide queries.",
+      "nextAction": "Extract controls, metrics, discrepancies and request routes."
+    },
+    {
+      "rank": 27,
+      "id": "mountain-view-ca",
+      "place": "Mountain View, California",
+      "agency": "Mountain View Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://abc7news.com/post/mountain-view-suspends-license-plate-readers-federal-agencies-accessed-flock-safety-camera-data-permission/18536718/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "City suspension followed reported federal access discovered in an audit.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 28,
+      "id": "los-altos-ca",
+      "place": "Los Altos, California",
+      "agency": "Los Altos Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.classlawgroup.com/flock-safety-license-plate-reader-cameras-lawsuit"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported large out-of-state access population warrants authority and audit reconciliation.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 29,
+      "id": "oakland-ca",
+      "place": "Oakland, California",
+      "agency": "Oakland Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.classlawgroup.com/flock-safety-license-plate-reader-cameras-lawsuit"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "California ALPR sharing restrictions create a high-value control test for a large deployment.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 30,
+      "id": "berkeley-ca",
+      "place": "Berkeley, California",
+      "agency": "Berkeley Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.classlawgroup.com/flock-safety-license-plate-reader-cameras-lawsuit"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "California sharing restrictions and regional access relationships warrant source review.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 31,
+      "id": "tiburon-ca",
+      "place": "Tiburon, California",
+      "agency": "Tiburon Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.townoftiburon.gov/m/newsflash/Home/Detail/758"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Monthly internal and external audit requirements create an unusually testable control record.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 32,
+      "id": "hollywood-fl",
+      "place": "Hollywood, Florida",
+      "agency": "Hollywood Police Department",
+      "state": "FL",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.axios.com/local/hollywood/2026/09/01/hollywood-police-florida-flock-cameras-data-agencies-nationwide"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported nationwide sharing with hundreds of agencies creates a measurable authority question.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 33,
+      "id": "dallas-tx",
+      "place": "Dallas, Texas",
+      "agency": "Dallas Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.axios.com/local/dallas/2026/09/02/dallas-flock-cameras-abbott-funding"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Large-scale deactivation and retention of hundreds of cameras creates a before-and-after control record.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 34,
+      "id": "wylie-tx",
+      "place": "Wylie, Texas",
+      "agency": "Wylie Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.axios.com/local/dallas/2026/09/02/dallas-flock-cameras-abbott-funding"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Contract termination may expose the underlying policy, audit and corrective-action trail.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 35,
+      "id": "fort-worth-tx",
+      "place": "Fort Worth, Texas",
+      "agency": "Fort Worth Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.axios.com/local/dallas/2026/09/02/dallas-flock-cameras-abbott-funding"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Large claimed enforcement yield warrants comparison to sharing, query and governance controls.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 36,
+      "id": "johnson-county-tx",
+      "place": "Johnson County, Texas",
+      "agency": "Johnson County Sheriff's Office",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.eff.org/deeplinks/2025/10/flock-safety-and-texas-sheriff-claimed-license-plate-search-was-missing-person-it"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Court and public records reportedly conflict with the stated purpose for an abortion-related search.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 37,
+      "id": "austin-tx",
+      "place": "Austin, Texas",
+      "agency": "Austin Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.eff.org/deeplinks/2025/06/victory-austin-organizers-cancel-citys-flock-alpr-contract"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Contract cancellation produced a documented procurement, governance and shutdown trail.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 38,
+      "id": "lufkin-tx",
+      "place": "Lufkin, Texas",
+      "agency": "Lufkin Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.chron.com/texas/article/flock-cameras-pflugerville-texas-22404256.php"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported criminal charges tied to database use warrant audit and access-control review.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 39,
+      "id": "katy-tx",
+      "place": "Katy, Texas",
+      "agency": "Katy Police Department",
+      "state": "TX",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.chron.com/texas/article/flock-cameras-pflugerville-texas-22404256.php"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported stalking-related misuse creates an individual-access and supervisory-control test.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 40,
+      "id": "west-chicago-il",
+      "place": "West Chicago, Illinois",
+      "agency": "West Chicago Police Department",
+      "state": "IL",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.facebook.com/westchicagopolicedepartment/posts/1584601797039167/"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Official review reportedly followed information indicating unauthorized officer use.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 41,
+      "id": "los-angeles-ca",
+      "place": "Los Angeles, California",
+      "agency": "Los Angeles Police Department",
+      "state": "CA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.latimes.com/california/story/2026-07-11/lapd-suspends-use-of-flock-surveillance-cameras-over-privacy-issues"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Inspector-general oversight and suspension create a substantial policy and implementation record.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 42,
+      "id": "westchester-county-ny",
+      "place": "Westchester County, New York",
+      "agency": "Westchester County public-safety network",
+      "state": "NY",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://apnews.com/article/32cc54e738177fe4b529de993ca96664"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Litigation reportedly challenges a nearly 600-camera network and 1.6 billion plate scans.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 43,
+      "id": "windsor-ct",
+      "place": "Windsor, Connecticut",
+      "agency": "Windsor Police Department",
+      "state": "CT",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.ctinsider.com/news/article/putnam-flock-camera-intentionally-struck-route-171-22414971.php"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Discontinuation amid statewide review may expose a useful governance and termination record.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 44,
+      "id": "killingworth-ct",
+      "place": "Killingworth, Connecticut",
+      "agency": "Killingworth law enforcement",
+      "state": "CT",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.ctinsider.com/news/article/putnam-flock-camera-intentionally-struck-route-171-22414971.php"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Discontinuation amid statewide review may expose a useful governance and termination record.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 45,
+      "id": "lansing-mi",
+      "place": "Lansing, Michigan",
+      "agency": "Lansing Police Department",
+      "state": "MI",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.theverge.com/tech/987353/florida-flock-cam-ban-state-highways"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported contract termination warrants review of the stated reasons and underlying controls.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 46,
+      "id": "knox-county-tn",
+      "place": "Knox County, Tennessee",
+      "agency": "Knox County law enforcement",
+      "state": "TN",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.theverge.com/tech/987353/florida-flock-cam-ban-state-highways"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Reported contract termination warrants review of the stated reasons and underlying controls.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 47,
+      "id": "staunton-va",
+      "place": "Staunton, Virginia",
+      "agency": "Staunton Police Department",
+      "state": "VA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.ci.staunton.va.us/Home/Components/News/News/2564/71"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Official contract withdrawal following security concerns creates a defined decision trail.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 48,
+      "id": "cambridge-ma",
+      "place": "Cambridge, Massachusetts",
+      "agency": "Cambridge Police Department",
+      "state": "MA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.eff.org/deeplinks/2025/12/local-communities-are-winning-against-alpr-surveillance-heres-how-2025-review"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Successful cancellation campaign warrants examination of procurement and governance controls.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 49,
+      "id": "eugene-or",
+      "place": "Eugene, Oregon",
+      "agency": "Eugene Police Department",
+      "state": "OR",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.eff.org/deeplinks/2025/12/local-communities-are-winning-against-alpr-surveillance-heres-how-2025-review"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Successful cancellation campaign warrants examination of procurement and governance controls.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    },
+    {
+      "rank": 50,
+      "id": "monroe-wa",
+      "place": "Monroe, Washington",
+      "agency": "Monroe Police Department",
+      "state": "WA",
+      "system": "Flock Safety / ALPR — verification pending",
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.monroewa.gov/1324/Flock-Safety-Camera-Program"
+      ],
+      "authority": "NOT YET",
+      "observed": "SIGNAL",
+      "surveyReadiness": 31,
+      "status": "SURVEYED",
+      "leadReason": "Official deployment, budget and strategic-priority records create a clean authority baseline for audit comparison.",
+      "nextAction": "Locate an official policy, contract, audit, court record or transparency export."
+    }
+  ]
+}

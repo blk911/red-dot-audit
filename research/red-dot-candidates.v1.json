@@ -1,0 +1,95 @@
+[
+  {
+    "id": "grand-island-ne",
+    "place": "Grand Island, Nebraska",
+    "agency": "Grand Island Police Department",
+    "state": "NE",
+    "system": "Flock Safety ALPR",
+    "researchStatus": "deep-review",
+    "publicationStatus": "candidate",
+    "candidateClass": ["sharing-variance", "required-control-gap", "representation-variance"],
+    "sources": [
+      { "title": "Automatic License Plate Readers", "publisher": "Grand Island Police Department", "url": "https://www.grand-island.com/o/gipd/page/automatic-license-plate-readers", "sourceType": "official", "proposition": "The agency publishes its intended uses and public representations for the ALPR program.", "confidence": "high" },
+      { "title": "Nebraska Automatic License Plate Reader Resources", "publisher": "Nebraska Crime Commission", "url": "https://ncc.nebraska.gov/automatic-license-plate-reader-resources", "sourceType": "official", "proposition": "The state publishes Grand Island ALPR collection reports for 2024 and 2025.", "confidence": "high" },
+      { "title": "Nebraska Revised Statute 60-3204", "publisher": "Nebraska Legislature", "url": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-3204", "sourceType": "statute", "proposition": "Nebraska law supplies a documented-purpose standard for manual ALPR queries.", "confidence": "high" },
+      { "title": "Grand Island Flock transparency portal", "publisher": "Flock Safety", "url": "https://transparency.flocksafety.com/grand-island-ne-pd", "sourceType": "vendor-record", "proposition": "The portal supplies the public operational snapshot used for reconciliation.", "confidence": "medium" }
+    ]
+  },
+  {
+    "id": "pflugerville-tx",
+    "place": "Pflugerville, Texas",
+    "agency": "Pflugerville Police Department",
+    "state": "TX",
+    "system": "Flock Safety ALPR",
+    "researchStatus": "deep-review",
+    "publicationStatus": "candidate",
+    "candidateClass": ["numerical-access-variance", "official-corrective-action"],
+    "sources": [
+      { "title": "Safety Cameras and Automatic License Plate Readers", "publisher": "City of Pflugerville", "url": "https://www.pflugervilletx.gov/safety-cameras-and-automated-license-plate-readers?contentId=51c89c47-3545-4c81-8b91-d6c0b607938e", "sourceType": "official", "proposition": "The city documents its 28-camera deployment and public program description.", "confidence": "high" },
+      { "title": "How one town's Flock data reached 459 agencies", "publisher": "Tech Brew", "url": "https://www.techbrew.com/stories/flock-pflugerville-texas-data-outside-agencies", "sourceType": "reporting", "proposition": "Public-record exports reportedly show 459 outside organizations and about 1.6 million searches over six months.", "confidence": "medium" },
+      { "title": "Pflugerville turns off Flock cameras", "publisher": "CBS Austin", "url": "https://cbsaustin.com/news/local/pflugerville-turns-off-flock-cameras-ahead-of-meeting-after-data-access-issue-discovered", "sourceType": "reporting", "proposition": "The city disabled the system while council considered the disclosed access issue.", "confidence": "medium" }
+    ]
+  },
+  {
+    "id": "oxnard-ca",
+    "place": "Oxnard, California",
+    "agency": "Oxnard Police Department",
+    "state": "CA",
+    "system": "Flock Safety ALPR",
+    "researchStatus": "deep-review",
+    "publicationStatus": "candidate",
+    "candidateClass": ["vendor-entitlement-variance", "official-corrective-action"],
+    "sources": [
+      { "title": "Oxnard Police Department Suspends Use of Flock Safety ALPRs", "publisher": "City of Oxnard", "url": "https://www.oxnard.gov/pd-news/news-release-oxnard-police-department-suspends-use-of-flock-safety-automated-license-plate-readers-02-27-26", "sourceType": "official", "proposition": "The agency reports 19 cameras, California-only settings, two federal nationwide queries and suspension of the system.", "confidence": "high" },
+      { "title": "California Civil Code 1798.90.55", "publisher": "California Legislature", "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.90.55.&lawCode=CIV", "sourceType": "statute", "proposition": "California law supplies restrictions relevant to ALPR information sharing and security safeguards.", "confidence": "high" },
+      { "title": "Flock LPR Policy", "publisher": "Flock Safety", "url": "https://www.flocksafety.com/legal/lpr-policy", "sourceType": "vendor-record", "proposition": "Flock describes audit storage and customer responsibility for authorized, legitimate access.", "confidence": "medium" }
+    ]
+  },
+  {
+    "id": "hall-county-ga",
+    "place": "Hall County, Georgia",
+    "agency": "Hall County Sheriff's Office",
+    "state": "GA",
+    "system": "Flock Safety ALPR",
+    "researchStatus": "deep-review",
+    "publicationStatus": "candidate",
+    "candidateClass": ["audit-confirmed-misuse", "official-corrective-action"],
+    "sources": [
+      { "title": "Hall County Flock audit exposes more unauthorized searches", "publisher": "FOX 5 Atlanta", "url": "https://www.fox5atlanta.com/news/hall-county-flock-audit-exposes-more-unauthorized-searches", "sourceType": "reporting", "proposition": "The continuing agency audit reportedly produced firings, resignations and identified unauthorized searches.", "confidence": "medium" },
+      { "title": "Three Hall County deputies resign during Flock audit", "publisher": "CBS News Atlanta", "url": "https://www.cbsnews.com/atlanta/news/3-more-hall-county-deputies-resign-as-agency-continues-flock-camera-system-audit-sheriff-says/", "sourceType": "reporting", "proposition": "Independent reporting confirms three resignations and two earlier firings during the audit.", "confidence": "medium" },
+      { "title": "Flock LPR Policy", "publisher": "Flock Safety", "url": "https://www.flocksafety.com/legal/lpr-policy", "sourceType": "vendor-record", "proposition": "Flock describes audit storage and legitimate-purpose controls relevant to the agency review.", "confidence": "medium" }
+    ]
+  },
+  {
+    "id": "jackson-county-in",
+    "place": "Jackson County, Indiana",
+    "agency": "Jackson County Sheriff's Department",
+    "state": "IN",
+    "system": "Flock Safety ALPR",
+    "researchStatus": "source-qualification",
+    "publicationStatus": "candidate",
+    "candidateClass": ["audit-confirmed-misuse", "criminal-referral"],
+    "sources": [
+      { "title": "Former Indiana deputy charged after 2,055 Flock searches", "publisher": "WTHI", "url": "https://www.wthitv.com/2026/08/31/former-indiana-deputy-charged-after-2055-flock-searches-same-license-plate/", "sourceType": "reporting", "proposition": "Reporting describes more than 2,000 searches of one plate, an audit, resignation and criminal charges.", "confidence": "medium" },
+      { "title": "Former southern Indiana deputy facing felony charge", "publisher": "WLKY", "url": "https://www.wlky.com/article/former-jackson-county-deputy-flock-camera-searches-misconduct/73574567", "sourceType": "reporting", "proposition": "Independent reporting confirms the charge and alleged concentration of searches.", "confidence": "medium" },
+      { "title": "Flock LPR Policy", "publisher": "Flock Safety", "url": "https://www.flocksafety.com/legal/lpr-policy", "sourceType": "vendor-record", "proposition": "Flock describes audit storage and legitimate-purpose access controls.", "confidence": "medium" }
+    ]
+  },
+  {
+    "id": "norfolk-va",
+    "place": "Norfolk, Virginia",
+    "agency": "Norfolk Police Department",
+    "state": "VA",
+    "system": "Flock Safety ALPR",
+    "researchStatus": "source-qualification",
+    "publicationStatus": "candidate",
+    "candidateClass": ["constitutional-scale", "litigation"],
+    "sources": [
+      { "title": "Schmidt v. Norfolk", "publisher": "American Civil Liberties Union", "url": "https://www.aclu.org/cases/schmidt-v-norfolk", "sourceType": "court", "proposition": "The case challenges retrospective movement tracking through Norfolk's ALPR network and records the litigation posture.", "confidence": "high" },
+      { "title": "Cameras", "publisher": "City of Norfolk", "url": "https://www.norfolk.gov/5967/Cameras", "sourceType": "official", "proposition": "The city documents installation of 172 Flock ALPR cameras and the categories of vehicle information captured.", "confidence": "high" },
+      { "title": "Norfolk camera surveillance case", "publisher": "Institute for Justice", "url": "https://ij.org/case/norfolk-virginia-camera-surveillance/", "sourceType": "court", "proposition": "The litigation record describes the challenged warrantless collection and retrospective search theory.", "confidence": "high" },
+      { "title": "Federal judge rules Norfolk cameras constitutional", "publisher": "WHRO", "url": "https://www.whro.org/business-growth/2026-02-11/a-federal-judge-ruled-norfolks-flock-surveillance-cameras-dont-invade-peoples-privacy-yet", "sourceType": "reporting", "proposition": "Independent reporting documents the district-court ruling, the camera count and the court's scale-dependent reasoning.", "confidence": "medium" },
+      { "title": "Flock LPR Policy", "publisher": "Flock Safety", "url": "https://www.flocksafety.com/legal/lpr-policy", "sourceType": "vendor-record", "proposition": "Flock describes the system's data and audit policy.", "confidence": "medium" }
+    ]
+  }
+]

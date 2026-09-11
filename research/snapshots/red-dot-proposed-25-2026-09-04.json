@@ -1,0 +1,706 @@
+{
+  "schemaVersion": 1,
+  "snapshotDate": "2026-09-04",
+  "status": "PROPOSED — PRIVATE REVIEW ONLY",
+  "method": "Evidence readiness (30), control/activity contrast (25), official action (15), evidence-acquisition specificity (10), and marketing value (20). A direct reviewed source URL is mandatory. The score measures package readiness and market interest, not liability.",
+  "totals": {
+    "reviewed": 50,
+    "sellableLeads": 28,
+    "sourceQualified": 27,
+    "proposed": 25,
+    "alternates": 3
+  },
+  "proposed": [
+    {
+      "id": "pflugerville-tx",
+      "disposition": "SELLABLE",
+      "score": 98,
+      "components": {
+        "evidence": 30,
+        "contrast": 25,
+        "action": 15,
+        "acquisition": 10,
+        "market": 20
+      },
+      "sourceCount": 3,
+      "sourceUrls": [
+        "https://www.techbrew.com/stories/flock-pflugerville-texas-data-outside-agencies",
+        "https://www.pflugervilletx.gov/safety-cameras-and-automated-license-plate-readers?contentId=51c89c47-3545-4c81-8b91-d6c0b607938e",
+        "https://www.mysanantonio.com/news/austin/article/pflugerville-flock-cameras-22404257.php"
+      ],
+      "control": "The city reportedly understood the sharing population to be about 80 and said statewide or national sharing was not enabled.",
+      "observed": "Network records reportedly identified 459 outside organizations and about 1.6 million searches; the city ended the agreement.",
+      "missingProof": "Dated sharing export, full Network Audit, Event Log and vendor incident correspondence.",
+      "valueCase": "quantified activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 1
+    },
+    {
+      "id": "denver-co",
+      "disposition": "SELLABLE",
+      "score": 94,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 15,
+        "acquisition": 10,
+        "market": 20
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.aclu-co.org/press-releases/coalition-of-civil-rights-and-advocacy-organizations-deeply-concerned-about-use-of-flock-cameras-for-ice-surveillance/",
+        "https://coloradofoic.org/news/frequent-immigration-related-searches-of-denver-flock-camera-data-revealed-in-logs/"
+      ],
+      "control": "Public city messaging said Denver data was not shared with ICE.",
+      "observed": "Logs reportedly show more than 1,400 immigration-related searches since June 2024; Denver later ended Flock use.",
+      "missingProof": "Logs, access path, approvals, policy and termination review.",
+      "valueCase": "quantified activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 2
+    },
+    {
+      "id": "san-francisco-ca",
+      "disposition": "SELLABLE",
+      "score": 94,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 15,
+        "acquisition": 10,
+        "market": 20
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.sanfranciscopolice.org/your-sfpd/policies/department-bulletins-notices/26-011",
+        "https://missionlocal.org/2026/06/federal-agencies-sf-surveillance-flock-data-audit/"
+      ],
+      "control": "California law and SFPD controls prohibit federal and out-of-state ALPR sharing.",
+      "observed": "An audit identified nearly 300 improper searches through a regional intelligence-center access path; SFPD cut off access.",
+      "missingProof": "Query-level audit, access agreement, approval trail and corrective-action record.",
+      "valueCase": "quantified activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 3
+    },
+    {
+      "id": "ventura-county-ca",
+      "disposition": "SELLABLE",
+      "score": 93,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 15,
+        "acquisition": 10,
+        "market": 19
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://sheriff.venturacounty.gov/ventura-county-4/",
+        "https://www.cbsnews.com/losangeles/news/flock-license-plate-readers-shared-data-with-out-of-state-federal-agencies/"
+      ],
+      "control": "The sheriff disabled National Lookup in 2023 to comply with California law.",
+      "observed": "A later audit reportedly found more than 364,000 out-of-state and federal accesses in two months, including 299 immigration-referenced justifications.",
+      "missingProof": "Complete audit, configuration history, query population and vendor root-cause report.",
+      "valueCase": "quantified activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 4
+    },
+    {
+      "id": "eugene-or",
+      "disposition": "SELLABLE",
+      "score": 92,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 15,
+        "acquisition": 10,
+        "market": 18
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://lookouteugene-springfield.com/story/justice/2025/12/16/timeline-the-brief-troubled-history-of-flock-cameras-in-eugene-springfield/",
+        "https://oregoncapitalchronicle.com/2025/10/23/alleging-secrecy-aclu-and-eugene-resident-sue-city-for-flock-camera-records/"
+      ],
+      "control": "Eugene opted out of nationwide lookup and represented Oregon-only access.",
+      "observed": "A later full-period audit found federal-agency searches in May and June 2025; the city ended the contract.",
+      "missingProof": "Full audit, configuration timeline, federal queries and vendor explanation.",
+      "valueCase": "quantified activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 5
+    },
+    {
+      "id": "windsor-ct",
+      "disposition": "SELLABLE",
+      "score": 90,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 15,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.ctinsider.com/connecticut/article/ct-windsor-license-plate-reader-camera-flock-vote-21360957.php",
+        "https://www.windsorct.gov/AgendaCenter/ViewFile/Item/1664?fileID=7346"
+      ],
+      "control": "Windsor adopted a local ALPR privacy policy intended to constrain data access and sharing.",
+      "observed": "Reported out-of-state access conflicted with that policy; council voted 8-1 to turn off 16 cameras.",
+      "missingProof": "Policy, access audit, contract, configuration and council findings.",
+      "valueCase": "quantified activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 6
+    },
+    {
+      "id": "lufkin-tx",
+      "disposition": "SELLABLE",
+      "score": 86,
+      "components": {
+        "evidence": 24,
+        "contrast": 20,
+        "action": 15,
+        "acquisition": 10,
+        "market": 17
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.kltv.com/2026/08/24/lufkin-police-officer-indicted-100-counts-related-flock-camera-misuse/",
+        "https://www.kbtx.com/2026/08/27/officer-accused-using-flock-cameras-search-ex-girlfriends-plate-more-than-10000-times/"
+      ],
+      "control": "Authorized investigative use and truthful query purposes governed access.",
+      "observed": "An officer was indicted on 100 counts after reportedly conducting more than 45,000 searches, including thousands involving a former partner.",
+      "missingProof": "Indictment, query export, audit trigger, supervisory history and preservation notices.",
+      "valueCase": "quantified activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 7
+    },
+    {
+      "id": "westchester-county-ny",
+      "disposition": "SELLABLE",
+      "score": 86,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 7,
+        "acquisition": 10,
+        "market": 20
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://apnews.com/article/32cc54e738177fe4b529de993ca96664",
+        "https://www.nyclu.org/commentary/westchester-police-are-tracking-millions-of-drivers"
+      ],
+      "control": "A class action alleges the nearly 600-camera program lacked legislative authorization and adequate oversight.",
+      "observed": "The system reportedly accumulated 1.6 billion scans and shared information with more than 50 agencies, including ICE.",
+      "missingProof": "Complaint exhibits, county authorization, sharing agreements, logs and retention controls.",
+      "valueCase": "quantified activity · concrete operational event · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 8
+    },
+    {
+      "id": "johnson-county-tx",
+      "disposition": "SELLABLE",
+      "score": 85,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 7,
+        "acquisition": 10,
+        "market": 19
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.eff.org/deeplinks/2025/10/flock-safety-and-texas-sheriff-claimed-license-plate-search-was-missing-person-it",
+        "https://www.rangemedia.co/flock-safety-cameras-spokane-county-abortion-texas/"
+      ],
+      "control": "The sheriff denied abortion-ban enforcement and the search was characterized as a missing-person matter.",
+      "observed": "A nationwide search across 83,345 cameras used the reason 'had an abortion'; an affidavit reportedly tied the case to an alleged abortion.",
+      "missingProof": "Query record, affidavit, requestor communications, approval and redisclosure trail.",
+      "valueCase": "quantified activity · concrete operational event · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 9
+    },
+    {
+      "id": "renton-wa",
+      "disposition": "SELLABLE",
+      "score": 85,
+      "components": {
+        "evidence": 24,
+        "contrast": 20,
+        "action": 15,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.rentonwa.gov/Government/Departments-and-Offices/Police/Police-Transparency/Automated-License-Plate-Readers",
+        "https://jsis.washington.edu/humanrights/2025/10/21/leaving-the-door-wide-open/"
+      ],
+      "control": "Renton requires a valid case number, authorized investigation and documented justification; its sharing report did not list Border Patrol.",
+      "observed": "Network Audit records show two Border Patrol searches of Renton data on June 23, 2025.",
+      "missingProof": "Complete Network Audit, purpose fields, access-path configuration and twice-monthly reviews.",
+      "valueCase": "quantified activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 10
+    },
+    {
+      "id": "syracuse-ny",
+      "disposition": "SELLABLE",
+      "score": 85,
+      "components": {
+        "evidence": 24,
+        "contrast": 25,
+        "action": 7,
+        "acquisition": 10,
+        "market": 19
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://centralcurrent.org/federal-immigration-agents-accessed-syracuse-drivers-data-through-secret-flock-safety-deal/",
+        "https://www.nyclu.org/commentary/how-license-plate-readers-track-your-every-move"
+      ],
+      "control": "The city did not directly authorize federal immigration access and later said it inadvertently joined national sharing.",
+      "observed": "Records reportedly show 175 CBP-related searches in one period and 2,097 immigration-labeled searches in a longer window.",
+      "missingProof": "Complete audit, configuration history, approval record and vendor notices.",
+      "valueCase": "quantified activity · concrete operational event · access/sharing significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 11
+    },
+    {
+      "id": "el-cajon-ca",
+      "disposition": "SELLABLE",
+      "score": 84,
+      "components": {
+        "evidence": 24,
+        "contrast": 17,
+        "action": 15,
+        "acquisition": 10,
+        "market": 18
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://oag.ca.gov/news/press-releases/attorney-general-bonta-continues-legal-challenge-stop-el-cajon-illegally-sharing",
+        "https://calmatters.org/justice/2025/10/el-cajon-police-license-plate-data/"
+      ],
+      "control": "California law restricts ALPR disclosure to federal and out-of-state agencies.",
+      "observed": "The attorney general alleges repeated sharing with agencies in more than two dozen states despite warnings.",
+      "missingProof": "Complaint exhibits, sharing exports, warning correspondence and current policy.",
+      "valueCase": "documented activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 12
+    },
+    {
+      "id": "mountain-view-ca",
+      "disposition": "SELLABLE",
+      "score": 84,
+      "components": {
+        "evidence": 24,
+        "contrast": 17,
+        "action": 15,
+        "acquisition": 10,
+        "market": 18
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.mountainview.gov/Home/Components/News/News/1203/284",
+        "https://www.mountainview.gov/Home/Components/News/News/1211/284"
+      ],
+      "control": "The city intended California-limited access and did not authorize federal use.",
+      "observed": "An audit found multiple federal agencies accessed local data without consent; the contract was terminated.",
+      "missingProof": "Complete audit, technical access path, vendor correspondence and termination file.",
+      "valueCase": "documented activity · official action or audit · access/sharing significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 13
+    },
+    {
+      "id": "los-angeles-ca",
+      "disposition": "SELLABLE",
+      "score": 81,
+      "components": {
+        "evidence": 24,
+        "contrast": 12,
+        "action": 15,
+        "acquisition": 10,
+        "market": 20
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.latimes.com/california/story/2026-07-11/lapd-suspends-use-of-flock-surveillance-cameras-over-privacy-issues",
+        "https://www.nbclosangeles.com/investigations/lapd-watchdog-urges-reconsideration-of-automatic-license-plate-readers/3916867/"
+      ],
+      "control": "The inspector general urged enforceable privacy, security and oversight safeguards.",
+      "observed": "LAPD halted and ended Flock use after an audit identified control and performance failures, including reported wrongful stops.",
+      "missingProof": "Inspector-general audit, error population, hot-list workflow, contract and corrective action.",
+      "valueCase": "documented activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 14
+    },
+    {
+      "id": "new-bedford-ma",
+      "disposition": "SELLABLE",
+      "score": 78,
+      "components": {
+        "evidence": 24,
+        "contrast": 12,
+        "action": 15,
+        "acquisition": 10,
+        "market": 17
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.newbedfordpd.com/2026/06/flock-safety-frequently-asked-questions/",
+        "https://www.wcvb.com/article/new-bedford-flock-cameras-suspended-audit/73479037"
+      ],
+      "control": "The department limits sharing geographically and requires legitimate purposes plus an audit trail.",
+      "observed": "The system was suspended after an officer allegedly used it to track a former partner.",
+      "missingProof": "Query history, audit trigger, policy acknowledgments and completed investigation.",
+      "valueCase": "documented activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 15
+    },
+    {
+      "id": "jackson-county-in",
+      "disposition": "SELLABLE",
+      "score": 77,
+      "components": {
+        "evidence": 24,
+        "contrast": 20,
+        "action": 7,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://eyesoffindiana.org/alpr-misuse",
+        "https://www.953mnc.com/2026/09/02/former-jackson-county-sheriffs-deputy-arrested-after-flock-audit/"
+      ],
+      "control": "Searches required a legitimate work purpose and truthful justification.",
+      "observed": "A former deputy allegedly searched one personal plate 2,055 times using a false planning or traffic justification; charges followed.",
+      "missingProof": "Query export, audit methodology, charging affidavit and supervisory alerts.",
+      "valueCase": "quantified activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 16
+    },
+    {
+      "id": "boulder-co",
+      "disposition": "SELLABLE",
+      "score": 75,
+      "components": {
+        "evidence": 24,
+        "contrast": 20,
+        "action": 7,
+        "acquisition": 7,
+        "market": 17
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://bouldercolorado.gov/services/flock-safety-cameras-and-boulder-police-department",
+        "https://boulderreportinglab.org/2025/08/19/until-recently-boulder-shared-license-plate-data-on-a-national-network-accessed-by-ice/"
+      ],
+      "control": "Boulder deactivated National Lookup in June 2025 and now describes Colorado-only sharing.",
+      "observed": "Earlier audits reportedly show more than 100 Border Patrol searches; one day included Boulder data in 5,438 queries.",
+      "missingProof": "Pre/post configuration exports, full audits and authorization for earlier nationwide access.",
+      "valueCase": "quantified activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 17
+    },
+    {
+      "id": "cambridge-ma",
+      "disposition": "SELLABLE",
+      "score": 72,
+      "components": {
+        "evidence": 24,
+        "contrast": 12,
+        "action": 7,
+        "acquisition": 10,
+        "market": 19
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.cambridgema.gov/news/2025/12/statementontheflocksafetyalprcontracttermination",
+        "https://www.wcvb.com/article/cambridge-ends-flock-safety-contract/69711475"
+      ],
+      "control": "Cambridge deactivated 16 cameras and ended the contract, requiring vendor work to cease.",
+      "observed": "Flock technicians installed two additional cameras afterward without city awareness under an uncancelled work order.",
+      "missingProof": "Work order, installation logs, termination notice, account status and incident response.",
+      "valueCase": "documented activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 18
+    },
+    {
+      "id": "milwaukee-wi",
+      "disposition": "SELLABLE",
+      "score": 72,
+      "components": {
+        "evidence": 24,
+        "contrast": 12,
+        "action": 7,
+        "acquisition": 10,
+        "market": 19
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.aclu-wi.org/press-releases/aclu-of-wisconsin-responds-to-accusations-of-milwaukee-police-officer-misusing-flock-surveillance-technology/",
+        "https://www.wpr.org/news/member-milwaukee-police-department-misuse-of-license-plate-reader-system"
+      ],
+      "control": "MPD access is restricted to legitimate law-enforcement use and is auditable by user and purpose.",
+      "observed": "Multiple reported cases allege personnel repeatedly tracked private individuals for personal reasons.",
+      "missingProof": "Account query histories, acknowledgments, audit frequency and disciplinary findings.",
+      "valueCase": "documented activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 19
+    },
+    {
+      "id": "brevard-county-fl",
+      "disposition": "SELLABLE",
+      "score": 71,
+      "components": {
+        "evidence": 24,
+        "contrast": 12,
+        "action": 7,
+        "acquisition": 10,
+        "market": 18
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://people.com/deputy-of-the-year-resigns-after-alleged-flock-search-misconduct-12070813",
+        "https://midmichigannow.com/news/nation-world/deputy-of-the-year-accused-using-flock-cameras-track-ex-resigns-probe-michael-fultz-brevard-county-sheriffs-office-florida-racial-slurs-nazi-salute-sex-firearm-crime-news"
+      ],
+      "control": "Policy barred unjustified off-duty access to the controlled investigative resource.",
+      "observed": "An internal investigation reportedly substantiated an improper search of a former partner's plate and contributed to a resignation.",
+      "missingProof": "Investigative file, query record, policy and supervisor notification trail.",
+      "valueCase": "documented activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 20
+    },
+    {
+      "id": "highland-heights-oh",
+      "disposition": "SELLABLE",
+      "score": 71,
+      "components": {
+        "evidence": 18,
+        "contrast": 20,
+        "action": 7,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.news5cleveland.com/news/local-news/highland-heights-police-dispatcher-accused-of-misusing-flock-has-resigned"
+      ],
+      "control": "The department reportedly had no ALPR-specific policy until after the conduct, then imposed monthly audits.",
+      "observed": "A dispatcher allegedly performed 20,292 searches, including 5,369 of one plate, before resigning.",
+      "missingProof": "Account audit, prior access policy, alert history and corrective-action documents.",
+      "valueCase": "quantified activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 21
+    },
+    {
+      "id": "katy-tx",
+      "disposition": "SELLABLE",
+      "score": 71,
+      "components": {
+        "evidence": 18,
+        "contrast": 12,
+        "action": 15,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://abc13.com/post/former-katy-police-officer-terminated-misusing-flock-cameras-track-ex-wife-months-pd-says/19735902/"
+      ],
+      "control": "Katy states the system is restricted to authorized investigations.",
+      "observed": "A former officer was charged after allegedly using Flock for months to track his former wife.",
+      "missingProof": "Query history, charging instrument, policy acknowledgement and supervisory audit.",
+      "valueCase": "documented activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 22
+    },
+    {
+      "id": "sumter-county-fl",
+      "disposition": "SELLABLE",
+      "score": 71,
+      "components": {
+        "evidence": 18,
+        "contrast": 12,
+        "action": 15,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.fox35orlando.com/news/sumter-county-sheriffs-detective-fired-arrested-over-alleged-database-misuse"
+      ],
+      "control": "Searches required authorized investigative use and accurate case documentation.",
+      "observed": "A detective was arrested and terminated after allegedly using unrelated case numbers and false records; the entire system was suspended.",
+      "missingProof": "Query export, false entries, affidavit, audit and remedial review.",
+      "valueCase": "documented activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 23
+    },
+    {
+      "id": "hall-county-ga",
+      "disposition": "SELLABLE",
+      "score": 69,
+      "components": {
+        "evidence": 24,
+        "contrast": 12,
+        "action": 7,
+        "acquisition": 10,
+        "market": 16
+      },
+      "sourceCount": 2,
+      "sourceUrls": [
+        "https://www.cbs46.com/2026/09/02/hall-county-deputy-fired-after-being-accused-misusing-flock-cameras/",
+        "https://www.gainesvilletimes.com/news/badge-bar/5-hall-county-sheriffs-office-employees-gone-in-two-weeks-as-flock-camera-audit-widens/"
+      ],
+      "control": "The sheriff initiated an audit against legitimate-purpose and authorized-use controls.",
+      "observed": "The review expanded into multiple firings and resignations after allegedly unrelated searches.",
+      "missingProof": "Full audit population, individual findings, policy versions and supervisory history.",
+      "valueCase": "documented activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ],
+      "proposedRank": 24
+    },
+    {
+      "id": "west-chicago-il",
+      "disposition": "SELLABLE",
+      "score": 69,
+      "components": {
+        "evidence": 18,
+        "contrast": 20,
+        "action": 7,
+        "acquisition": 10,
+        "market": 14
+      },
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://westchicago.org/news/city-of-west-chicago-statement-regarding-flock-camera-system-review/"
+      ],
+      "control": "The city system was restricted to authorized law-enforcement use.",
+      "observed": "An official review found possible unauthorized use in late 2024 and early 2025; records were preserved and referred.",
+      "missingProof": "Preserved logs, findings, referral and policy history.",
+      "valueCase": "quantified activity · concrete operational event · individual misuse significance",
+      "blockers": [],
+      "cautions": [],
+      "proposedRank": 25
+    }
+  ],
+  "alternates": [
+    {
+      "id": "coweta-county-ga",
+      "disposition": "SELLABLE",
+      "score": 66,
+      "components": {
+        "evidence": 18,
+        "contrast": 12,
+        "action": 15,
+        "acquisition": 10,
+        "market": 11
+      },
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.atlantanewsfirst.com/2026/08/04/3-coweta-county-sheriffs-office-employees-resign-after-flock-audit/"
+      ],
+      "control": "A self-initiated account audit supplied the agency's use-control test.",
+      "observed": "Three employees resigned after accounts were flagged; the matter was referred for state investigation.",
+      "missingProof": "Audit, account histories, referral and policy acknowledgments.",
+      "valueCase": "documented activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ]
+    },
+    {
+      "id": "brunswick-county-nc",
+      "disposition": "SELLABLE",
+      "score": 65,
+      "components": {
+        "evidence": 18,
+        "contrast": 12,
+        "action": 15,
+        "acquisition": 10,
+        "market": 10
+      },
+      "sourceCount": 1,
+      "sourceUrls": [
+        "https://www.wect.com/2026/09/01/brunswick-co-sheriffs-office-employee-resigns-amid-investigation-into-flock-system-misuse/"
+      ],
+      "control": "A routine audit tested access against authorized law-enforcement use.",
+      "observed": "The audit flagged alleged misuse, an employee resigned and the matter was referred to the state SBI.",
+      "missingProof": "Flagged searches, internal review, referral and final findings.",
+      "valueCase": "documented activity · official action or audit · individual misuse significance",
+      "blockers": [],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ]
+    },
+    {
+      "id": "oxnard-ca",
+      "disposition": "SELLABLE",
+      "score": 65,
+      "components": {
+        "evidence": 12,
+        "contrast": 17,
+        "action": 15,
+        "acquisition": 7,
+        "market": 14
+      },
+      "sourceCount": 0,
+      "sourceUrls": [],
+      "control": "Official settings limited access to California agencies and barred federal/out-of-state sharing.",
+      "observed": "The city reported two federal nationwide queries reached its data and suspended the system.",
+      "missingProof": "Query details, configuration history and Flock technical incident report.",
+      "valueCase": "documented activity · official action or audit · access/sharing significance",
+      "blockers": [
+        "No direct reviewed source URL captured"
+      ],
+      "cautions": [
+        "No quantified activity in captured summary"
+      ]
+    }
+  ]
+}

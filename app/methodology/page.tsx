@@ -1,0 +1,16 @@
+import type { Metadata } from "next";
+import LegalPage from "@/app/legal-page";
+
+export const metadata: Metadata = { title: "Methodology & Disclosures — Red Dot Audit", description: "How Red Dot Audit identifies, bounds and reports unresolved public-record discrepancies." };
+
+export default function MethodologyPage() {
+  return <LegalPage eyebrow="EVIDENCE STANDARD" title="Methodology & Disclosures" intro="A Red Dot is a documented reconciliation question. It is not an accusation, verdict or liability score." sections={[
+    { heading: "The reconciliation model", paragraphs: ["We compare the state required or represented by law, policy, contract and official statement with the state observable in public operational records. The working sequence is: Requirement → Authority → Duty → Actor → Conduct → Evidence → Discrepancy → Missing Proof → Target."] },
+    { heading: "Evidence classes", bullets: ["Authority: statutes, regulations, policies, contracts, MOUs and written approvals.", "Configuration: sharing lists, access settings, user roles and vendor transparency portals.", "Activity: audit exports, query logs, event histories, incident records and official findings.", "Representation: public statements, council materials, procurement claims and vendor documentation.", "Missing proof: a record identified by an existing duty, system function or documented process but not located in the available public record."] },
+    { heading: "What “unreconciled” means", paragraphs: ["Unreconciled means the available evidence populations do not yet account for one another. It does not mean unauthorized. A statewide agreement, different time period, distinct access mechanism, later-produced approval or source error may explain the difference."] },
+    { heading: "Scores and labels", paragraphs: ["A Red Dot Score describes the apparent size, specificity, source quality and investigative usefulness of a documentary discrepancy. It does not estimate guilt, legal merit or damages. NEW, RISING, DOCUMENT ADDED, OFFICIAL RESPONSE, RECONCILED, REMOVED and REPORT AVAILABLE are editorial lifecycle labels, not legal conclusions."] },
+    { heading: "Source discipline", bullets: ["Material factual statements should link to the supporting public source.", "Different time periods or evidence populations are not presented as a numerical variance unless they are reasonably comparable.", "Third-party reporting may identify an issue, but primary records are preferred for the report’s controlling propositions.", "An official response, later record or correction is added when it materially changes the analysis."] },
+    { heading: "Corrections and right of response", paragraphs: ["Agencies, vendors, officials and readers may submit correcting records or context to support@reddotaudit.com. We review material submissions and may mark a target reconciled, revise it or remove it when the evidence warrants."] },
+    { heading: "Important boundary", paragraphs: ["Red Dot Audit is not a consumer reporting agency and its reports may not be used for employment, credit, housing, insurance or other regulated eligibility decisions. Reports are not legal advice or findings of misconduct."] },
+  ]} />;
+}

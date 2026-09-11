@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788392044001,
+      "tag": "0000_big_puppet_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788549883923,
+      "tag": "0001_chubby_wilson_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788955882121,
+      "tag": "0009_campaign_delivery_targets",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1788966065731,
+      "tag": "0003_real_outlaw_kid",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1789062995960,
+      "tag": "0004_lovely_mephistopheles",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1789064416995,
+      "tag": "0005_lively_rachel_grey",
+      "breakpoints": true
+    }
+  ]
+}
