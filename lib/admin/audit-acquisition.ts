@@ -2,7 +2,7 @@ import { getD1 } from "@/lib/commerce/config";
 import { redDotTargets } from "@/app/red-dot-targets";
 import { extractJurisdictionMetrics, saveJurisdictionMetrics } from "@/lib/admin/jurisdiction-metrics";
 
-type EvidenceType = "AGENCY" | "AUTHORITY" | "STATISTICS" | "USAGE" | "CONTACT" | "FRICTION" | "OTHER";
+type EvidenceType = "AGENCY" | "AUTHORITY" | "STATISTICS" | "USAGE" | "CONTACT" | "FRICTION" | "LEGAL_ACTION" | "OTHER";
 type SearchHit = { title: string; url: string; summary: string; evidenceType: EvidenceType };
 type ValidatedSource = SearchHit & { finalUrl: string; body: string; sourceClass: string; links: SearchHit[] };
 
@@ -61,6 +61,44 @@ async function discoverSources(jurisdiction: string, agency: string, officialDom
   return [...new Map(hits.map((item) => [item.url, { ...item, evidenceType: item.evidenceType === "OTHER" ? inferType(`${item.title} ${item.summary}`) : item.evidenceType }])).values()].slice(0, 36);
 }
 
+// CourtListener/RECAP (Free Law Project) indexes full text of filed federal
+// documents, not just docket metadata — so a jurisdiction/agency name can
+// match a case even when neither term appears on the docket's own summary
+// page. Its own search relevance is therefore treated as the verification
+// (unlike the generic web hits above, these are recorded straight into
+// evidence without a second fetch+body-content check) rather than something
+// re-derived by refetching the docket page, which would spuriously reject
+// real matches. No API key is required for this endpoint.
+const COURTLISTENER_BASE = "https://www.courtlistener.com";
+type CourtListenerResult = { caseName?: string; court_citation_string?: string; docketNumber?: string; dateFiled?: string; cause?: string; docket_absolute_url?: string };
+// "United States v. [Defendant]" is the federal caption for an ordinary
+// criminal prosecution. ALPR/Flock terms show up in plenty of these purely
+// as a routine investigative detail (e.g. "officers located the vehicle via
+// a Flock alert") — that is the system working as intended, not evidence of
+// an authority/use gap, and including it would flood the evidence ledger
+// with noise unrelated to oversight. Civil rights suits, class actions
+// against the vendor, and other civil litigation keep the plaintiff's name
+// as the caption's first party, so this pattern only excludes the criminal
+// docket shape.
+const federalCriminalCaption = /^united states v\./i;
+
+async function courtListenerHits(jurisdiction: string, agency: string): Promise<SearchHit[]> {
+  const queries = [`"${agency}" (Flock OR ALPR OR "license plate reader")`, `"${jurisdiction}" (Flock OR ALPR OR "license plate reader")`];
+  const batches = await Promise.all(queries.map(async (query) => {
+    try {
+      const response = await fetch(`${COURTLISTENER_BASE}/api/rest/v4/search/?type=r&q=${encodeURIComponent(query)}`, { headers: { "User-Agent": "RedDotAudit-Acquisition/3.1", Accept: "application/json" }, signal: AbortSignal.timeout(12_000) });
+      if (!response.ok) return [];
+      const body = (await response.json()) as { results?: CourtListenerResult[] };
+      return (body.results || []).slice(0, 8).map((row): SearchHit | null => {
+        if (!row.docket_absolute_url || !row.caseName || federalCriminalCaption.test(row.caseName)) return null;
+        const summary = `ALPR/Flock Safety civil litigation — ${row.court_citation_string || "federal court"} · docket ${row.docketNumber || "unknown"} · filed ${row.dateFiled || "unknown date"}${row.cause ? ` · ${row.cause}` : ""}`;
+        return { title: row.caseName, url: `${COURTLISTENER_BASE}${row.docket_absolute_url}`, summary, evidenceType: "LEGAL_ACTION" };
+      }).filter((hit): hit is SearchHit => Boolean(hit));
+    } catch { return []; }
+  }));
+  return [...new Map(batches.flat().map((hit) => [hit.url, hit])).values()];
+}
+
 async function recordEvidence(auditId: string, frictionId: string, jurisdiction: string, hit: SearchHit, status: string, excerpt?: string | null, reason?: string | null, finalUrl?: string) {
   const db = getD1(); const now = new Date().toISOString(); const url = finalUrl || hit.url;
   await db.prepare("INSERT INTO admin_jurisdiction_evidence (id,audit_id,friction_id,jurisdiction,normalized_jurisdiction,evidence_type,title,source_url,publisher_domain,source_class,status,excerpt,failure_reason,discovered_at,verified_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(audit_id,source_url) DO UPDATE SET evidence_type=excluded.evidence_type,title=excluded.title,publisher_domain=excluded.publisher_domain,source_class=excluded.source_class,status=excluded.status,excerpt=excluded.excerpt,failure_reason=excluded.failure_reason,verified_at=excluded.verified_at,updated_at=excluded.updated_at").bind(crypto.randomUUID(), auditId, frictionId, jurisdiction, normalized(jurisdiction), hit.evidenceType, hit.title || null, url, hostname(url), sourceClass(url), status, excerpt || null, reason || null, now, status.startsWith("VERIFIED_") ? now : null, now).run();
@@ -103,6 +141,7 @@ export async function acquireJurisdictionAudit(frictionId: string, censusId?: st
   const candidateAgency = String(censusRows.results[0]?.agency || target?.agency || jurisdiction); const searched = await discoverSources(jurisdiction, candidateAgency, knownOfficial.results.map((row) => row.publisher_domain)); const seedHits = systematic ? frictionUrls.map((url) => ({ title: `${candidateAgency} census source`, url, summary: `Survey seed for ${candidateAgency} in ${jurisdiction}`, evidenceType: "OTHER" as EvidenceType })) : []; const discovered = [...new Map([...seedHits, ...searched].map((hit) => [hit.url, hit])).values()]; for (const hit of discovered) await recordEvidence(auditId, frictionId, jurisdiction, hit, "DISCOVERED", hit.summary);
   const firstValidation = await Promise.all(discovered.map(async (hit) => ({ hit, result: await validateHit(hit, jurisdiction) }))); const officialLinks = firstValidation.flatMap((item) => item.result.source?.sourceClass === "OFFICIAL" ? item.result.source.links : []).filter((hit) => !discovered.some((item) => item.url === hit.url)).slice(0, 16); for (const hit of officialLinks) await recordEvidence(auditId, frictionId, jurisdiction, hit, "DISCOVERED", hit.summary); const linkedValidation = await Promise.all(officialLinks.map(async (hit) => ({ hit, result: await validateHit(hit, jurisdiction) }))); const validation = [...firstValidation, ...linkedValidation]; const verified: ValidatedSource[] = []; const errors: string[] = [];
   for (const item of validation) { if (item.result.source) { const source = item.result.source; const status = item.hit.evidenceType === "CONTACT" ? "VERIFIED_CONTACT" : item.hit.evidenceType === "AGENCY" ? "VERIFIED_AGENCY" : item.hit.evidenceType === "OTHER" && !technology.test(source.body) ? "DISCOVERY_GATEWAY" : "VERIFIED_AUDIT_EVIDENCE"; if (status === "VERIFIED_AUDIT_EVIDENCE" || status === "VERIFIED_AGENCY" || status === "VERIFIED_CONTACT") verified.push(source); await recordEvidence(auditId, frictionId, jurisdiction, item.hit, status, sentence(source.body, technology) || item.hit.summary, null, source.finalUrl); } else { const status = /PDF exceeds|document parse/i.test(item.result.reason || "") ? "NEEDS_DOCUMENT_PARSE" : "REJECTED"; await recordEvidence(auditId, frictionId, jurisdiction, item.hit, status, item.hit.summary, item.result.reason); errors.push(`${item.hit.url}: ${item.result.reason}`); } }
+  const courtHits = await courtListenerHits(jurisdiction, candidateAgency); for (const hit of courtHits) await recordEvidence(auditId, frictionId, jurisdiction, hit, "VERIFIED_AUDIT_EVIDENCE", hit.summary, null, hit.url);
   let authorityText = target?.control || null; let authoritySourceUrl = target?.sources[0]?.url || null; let observedText = target?.observed || (systematic ? null : String(friction.complaint_summary)); let observedSourceUrl = target?.sources[0]?.url || (systematic ? null : String(friction.origin_url)); let agency = target?.agency || String(censusRows.results[0]?.agency || "") || null; let sourcedDiscrepancy: string | null = target?.teaser || null;
   for (const row of censusRows.results) { const source = (() => { try { return (JSON.parse(String(row.source_urls_json || "[]")) as string[])[0]; } catch { return undefined; } })(); if (source && Number(row.device_count) > 0) await saveJurisdictionMetrics(jurisdiction, source, [{ key: "cameras_identified", value: String(row.device_count), label: "CAMERAS IDENTIFIED" }], String(row.last_verified_at || now)); }
   for (const source of verified) { if (source.evidenceType !== "CONTACT") await saveJurisdictionMetrics(jurisdiction, source.finalUrl, extractJurisdictionMetrics(source.body), now); agency ||= extractAgency(source.body, jurisdiction); const authority = sentence(source.body, new RegExp(`${technology.source}.{0,220}${authorityTerms.source}|${authorityTerms.source}.{0,220}${technology.source}`, "i")); if (!authorityText && authority && ["OFFICIAL", "LEGAL", "NEWS"].includes(source.sourceClass)) { authorityText = authority; authoritySourceUrl = source.finalUrl; } const usage = sentence(source.body, new RegExp(`${technology.source}.{0,220}${usageTerms.source}|${usageTerms.source}.{0,220}${technology.source}`, "i")); if (usage) { observedText = usage; observedSourceUrl = source.finalUrl; } const variance = sentence(source.body, /\b(unauthorized|outside (?:the )?policy|policy violation|misuse|abuse|improper(?:ly)?|without approval|not permitted|violat(?:e|ed|ion)|discrepan(?:cy|cies)|failed to audit|access revoked)\b/i); if (!sourcedDiscrepancy && variance && ["OFFICIAL", "LEGAL", "NEWS", "ADVOCACY"].includes(source.sourceClass)) sourcedDiscrepancy = variance; const contact = extractContact(source.body); if (contact && source.sourceClass === "OFFICIAL") await db.prepare("INSERT INTO admin_official_contacts (id,jurisdiction,normalized_jurisdiction,name,title,organization,email,phone,source_url,status,verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,'VERIFIED',?,?,?) ON CONFLICT(normalized_jurisdiction,email) DO UPDATE SET name=excluded.name,organization=excluded.organization,phone=excluded.phone,source_url=excluded.source_url,status='VERIFIED',verified_at=excluded.verified_at,updated_at=excluded.updated_at").bind(crypto.randomUUID(), jurisdiction, key, contact.name, null, agency, contact.email, contact.phone, source.finalUrl, now, now, now).run(); }

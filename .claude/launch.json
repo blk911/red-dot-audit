@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "WRANGLER_LOG_PATH=.wrangler/wrangler.log npx vite"],
+      "port": 5173
+    }
+  ]
+}

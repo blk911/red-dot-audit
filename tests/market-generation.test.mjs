@@ -117,3 +117,15 @@ test("jurisdiction acquisition stores search provenance and rejects unsourced va
   assert.match(metrics, /sourceDate/);
   assert.match(metrics, /confidence/);
 });
+
+test("court/legal-action evidence is sourced from CourtListener and recorded without a re-fetch", () => {
+  const acquisition = fs.readFileSync(new URL("../lib/admin/audit-acquisition.ts", import.meta.url), "utf8");
+  assert.match(acquisition, /LEGAL_ACTION/);
+  assert.match(acquisition, /COURTLISTENER_BASE = "https:\/\/www\.courtlistener\.com"/);
+  assert.match(acquisition, /\$\{COURTLISTENER_BASE\}\/api\/rest\/v4\/search\/\?type=r&q=/);
+  assert.match(acquisition, /async function courtListenerHits/);
+  assert.match(acquisition, /federalCriminalCaption = \/\^united states v\\\.\/i/);
+  assert.match(acquisition, /federalCriminalCaption\.test\(row\.caseName\)/);
+  assert.match(acquisition, /const courtHits = await courtListenerHits\(jurisdiction, candidateAgency\)/);
+  assert.match(acquisition, /for \(const hit of courtHits\) await recordEvidence\(auditId, frictionId, jurisdiction, hit, "VERIFIED_AUDIT_EVIDENCE"/);
+});

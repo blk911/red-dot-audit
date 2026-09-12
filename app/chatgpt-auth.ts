@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { env } from "cloudflare:workers";
 
 export type ChatGPTUser = {
   displayName: string;
@@ -19,7 +20,7 @@ const CALLBACK_PATH = "/callback";
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
   const requestHeaders = await headers();
   const email = requestHeaders.get(USER_EMAIL_HEADER);
-  if (!email) return null;
+  if (!email) return getLocalDevUser();
 
   const encodedFullName = requestHeaders.get(USER_FULL_NAME_HEADER);
   const fullName =
@@ -32,6 +33,24 @@ export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
     displayName: fullName ?? email,
     email,
     fullName,
+  };
+}
+
+// Development-only identity shim: ChatGPT Sites injects the headers read
+// above; a plain local `vite` server never receives them. `import.meta.env.DEV`
+// is statically inlined by Vite, so this branch is dead-code-eliminated from
+// production builds regardless of what LOCAL_ADMIN_EMAIL happens to be set to
+// in any runtime environment. Never trust a client-supplied header/query/
+// cookie here — only a build-time-gated local var.
+function getLocalDevUser(): ChatGPTUser | null {
+  if (!import.meta.env.DEV) return null;
+  const localAdminEmail = (env as Record<string, string | undefined>)
+    .LOCAL_ADMIN_EMAIL;
+  if (!localAdminEmail) return null;
+  return {
+    displayName: localAdminEmail,
+    email: localAdminEmail,
+    fullName: null,
   };
 }
 

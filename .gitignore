@@ -41,3 +41,10 @@ next-env.d.ts
 /.sites-runtime/
 /outputs/
 /work/
+
+# internal-only notes: contains business strategy and admin identity, never
+# committed to this public repo (see CLAUDE_HANDOFF.md section 1)
+CLAUDE_HANDOFF.md
+APP_STATE.md
+CURRENT_APP_STATE.md
+RED_DOT_25_PRODUCTION_RUN.md
