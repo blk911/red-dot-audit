@@ -157,8 +157,13 @@ export const jurisdictionMetrics = sqliteTable(
     id: text("id").primaryKey(), normalizedJurisdiction: text("normalized_jurisdiction").notNull(), jurisdiction: text("jurisdiction").notNull(),
     metricKey: text("metric_key").notNull(), value: text("value").notNull(), label: text("label").notNull(), sourceUrl: text("source_url").notNull(), sourceDate: text("source_date"), excerpt: text("excerpt"), confidence: text("confidence").notNull().default("HIGH"),
     verificationStatus: text("verification_status").notNull().default("SOURCE_VERIFIED"), verifiedAt: text("verified_at").notNull(), createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`), updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    // Identifies the exact candidate a metric belongs to. Falls back to
+    // normalizedJurisdiction (backfilled in migration 0014) when no census
+    // candidate is bound, so two different agencies sharing a jurisdiction
+    // string never overwrite each other's metrics.
+    censusId: text("census_id"),
   },
-  (table) => [uniqueIndex("admin_jurisdiction_metrics_jurisdiction_key_uidx").on(table.normalizedJurisdiction, table.metricKey), index("admin_jurisdiction_metrics_verified_idx").on(table.verificationStatus, table.verifiedAt)],
+  (table) => [uniqueIndex("admin_jurisdiction_metrics_census_key_uidx").on(table.censusId, table.metricKey), index("admin_jurisdiction_metrics_verified_idx").on(table.verificationStatus, table.verifiedAt), index("admin_jurisdiction_metrics_jurisdiction_idx").on(table.normalizedJurisdiction)],
 );
 
 export const jurisdictionAudits = sqliteTable(

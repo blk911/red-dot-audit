@@ -24,9 +24,35 @@ export function extractJurisdictionMetrics(text: string): MetricFact[] {
   return facts;
 }
 
-export async function saveJurisdictionMetrics(jurisdiction: string, sourceUrl: string, facts: MetricFact[], verifiedAt = new Date().toISOString()) {
+// A bare jurisdiction string is not a stable identity: two different
+// agencies (city PD, county sheriff, a second department entirely) can
+// share the same city name, and without a candidate id their metrics would
+// silently overwrite each other under the old (normalizedJurisdiction,
+// metricKey) uniqueness. `censusId` — the admin_census_deployments row this
+// metric was acquired for — is the real identity. When no census candidate
+// is bound (canonical/seed jurisdictions, or callers that predate the
+// census-driven pipeline), the normalized jurisdiction string is used as a
+// fallback identity, preserving the old one-row-per-jurisdiction behavior
+// for exactly those callers instead of silently going unbounded.
+//
+// A fallback-keyed row (census_id = its own normalized_jurisdiction — the
+// tell that migration 0014's backfill or an uncensused caller wrote it, not
+// a real candidate) is a *different* key from a real census_id, so once a
+// jurisdiction is later re-acquired with its real identity the two rows
+// don't collide on ON CONFLICT — the old one would otherwise sit there
+// forever as an orphaned duplicate. Retiring it here, in the same write,
+// is what makes migrated data self-heal as jurisdictions get reprocessed
+// rather than needing a one-off cleanup script (which would also miss
+// anything acquired after this ships).
+export async function saveJurisdictionMetrics(jurisdiction: string, sourceUrl: string, facts: MetricFact[], verifiedAt = new Date().toISOString(), censusId?: string | null) {
   if (!facts.length || !jurisdiction || !sourceUrl) return 0;
-  const db = getD1(); const key = normalized(jurisdiction); const now = new Date().toISOString();
-  await db.batch(facts.map((fact) => db.prepare("INSERT INTO admin_jurisdiction_metrics (id,normalized_jurisdiction,jurisdiction,metric_key,value,label,source_url,source_date,excerpt,confidence,verification_status,verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'SOURCE_VERIFIED',?,?,?) ON CONFLICT(normalized_jurisdiction,metric_key) DO UPDATE SET value=excluded.value,label=excluded.label,source_url=excluded.source_url,source_date=excluded.source_date,excerpt=excluded.excerpt,confidence=excluded.confidence,verification_status='SOURCE_VERIFIED',verified_at=excluded.verified_at,updated_at=excluded.updated_at").bind(crypto.randomUUID(), key, jurisdiction, fact.key, fact.value, fact.label, sourceUrl, fact.sourceDate || null, fact.excerpt || null, fact.confidence || "HIGH", verifiedAt, now, now)));
+  const db = getD1(); const key = normalized(jurisdiction); const now = new Date().toISOString(); const identity = censusId || key;
+  const statements = facts.flatMap((fact) => {
+    const insert = db.prepare("INSERT INTO admin_jurisdiction_metrics (id,normalized_jurisdiction,jurisdiction,metric_key,value,label,source_url,source_date,excerpt,confidence,verification_status,verified_at,created_at,updated_at,census_id) VALUES (?,?,?,?,?,?,?,?,?,?,'SOURCE_VERIFIED',?,?,?,?) ON CONFLICT(census_id,metric_key) DO UPDATE SET value=excluded.value,label=excluded.label,source_url=excluded.source_url,source_date=excluded.source_date,excerpt=excluded.excerpt,confidence=excluded.confidence,verification_status='SOURCE_VERIFIED',verified_at=excluded.verified_at,updated_at=excluded.updated_at,normalized_jurisdiction=excluded.normalized_jurisdiction,jurisdiction=excluded.jurisdiction").bind(crypto.randomUUID(), key, jurisdiction, fact.key, fact.value, fact.label, sourceUrl, fact.sourceDate || null, fact.excerpt || null, fact.confidence || "HIGH", verifiedAt, now, now, identity);
+    if (!censusId) return [insert];
+    const retireStaleFallback = db.prepare("DELETE FROM admin_jurisdiction_metrics WHERE normalized_jurisdiction=? AND metric_key=? AND census_id=?").bind(key, fact.key, key);
+    return [retireStaleFallback, insert];
+  });
+  await db.batch(statements);
   return facts.length;
 }

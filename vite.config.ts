@@ -31,6 +31,18 @@ const localBindingConfig = {
         },
       ]
     : [],
+  // Renders JS-executed pages (e.g. Google News' redirect wrapper) that a
+  // plain fetch can't follow. Unlike d1/r2, this isn't declared in
+  // .openai/hosting.json — that schema only documents D1 and R2, so whether
+  // the Sites hosting platform actually provisions a Browser Rendering
+  // binding in production is unconfirmed. It's also untestable in local
+  // `vite dev`: Miniflare doesn't run a real browser for this binding
+  // without `remote: true`, which requires an authenticated Cloudflare
+  // account connection this project doesn't have configured. The binding
+  // name below must be provisioned (locally via `remote: true` + `wrangler
+  // login`, or in whatever config controls the deployed Worker) before
+  // `lib/admin/browser-render.ts` can do anything beyond return null.
+  browser: { binding: "BROWSER" },
 };
 
 export default defineConfig(async () => {

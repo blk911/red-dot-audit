@@ -53,7 +53,8 @@ export async function bootstrapCensus() {
   for (const target of redDotTargets) {
     if (!target.publicMetrics?.length) continue;
     const facts = target.publicMetrics.slice(0, 4).map((metric) => ({ key: metric.label.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, ""), value: metric.value, label: metric.label.toUpperCase() }));
-    await saveJurisdictionMetrics(target.place, target.sourceHref, facts, target.evidenceDate || survey.snapshotDate);
+    const seededCandidate = survey.candidates.find((item) => item.place === target.place);
+    await saveJurisdictionMetrics(target.place, target.sourceHref, facts, target.evidenceDate || survey.snapshotDate, seededCandidate ? `census-${seededCandidate.id}` : undefined);
   }
   await db.prepare("INSERT INTO admin_activity_log (id,actor,event_type,entity_type,summary,metadata_json,created_at) VALUES (?,?,?,?,?,?,?)").bind(crypto.randomUUID(), "SYSTEM", "CENSUS_IMPORTED", "CENSUS", `Imported ${survey.candidates.length} researched jurisdictions and ${survey.candidates.reduce((sum, item) => sum + item.sourceUrls.length, 0)} source endpoints.`, JSON.stringify({ snapshotDate: survey.snapshotDate }), now).run();
   return { jurisdictions: survey.candidates.length, endpoints: survey.candidates.reduce((sum, item) => sum + item.sourceUrls.length, 0) };

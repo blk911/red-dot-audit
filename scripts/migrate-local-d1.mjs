@@ -109,6 +109,9 @@ const checks = [
   ["admin_jurisdiction_metrics", "source_date"],
   ["admin_jurisdiction_metrics", "excerpt"],
   ["admin_jurisdiction_metrics", "confidence"],
+  ["admin_jurisdiction_metrics", "census_id"],
+  ["admin_census_deployments", "acquisition_next_attempt_at"],
+  ["admin_census_deployments", "acquisition_terminal_reason"],
 ];
 
 console.log("[migrate] verifying critical columns:");

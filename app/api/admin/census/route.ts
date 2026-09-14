@@ -9,8 +9,8 @@ export const runtime = "edge";
 export async function POST(request: Request) {
   if (!(await isAdminRequest())) return NextResponse.json({ error: "Not authorized." }, { status: 403 });
   try {
-    const body = await request.json().catch(() => null) as { action?: string; id?: string; jurisdiction?: string; agency?: string; limit?: number } | null;
-    if (body?.action === "harvest") return NextResponse.json({ ok: true, ...(await harvestNationalCandidates(2)) });
+    const body = await request.json().catch(() => null) as { action?: string; id?: string; jurisdiction?: string; agency?: string; limit?: number; pages?: number } | null;
+    if (body?.action === "harvest") return NextResponse.json({ ok: true, ...(await harvestNationalCandidates(body.pages)) });
     if (body?.action === "process_queue") return NextResponse.json({ ok: true, ...(await processAcquisitionQueue(body.limit || 1)) });
     if (body?.action === "audit" && body.id) return NextResponse.json({ ok: true, ...(await startSystematicAudit(body.id)) });
     if (body?.action === "create") {

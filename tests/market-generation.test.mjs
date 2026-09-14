@@ -36,7 +36,7 @@ test("friction intake preserves the public voice and requires an explicit audit 
   assert.match(discovery, /noFriction/);
   assert.match(discovery, /actionableJurisdiction/);
   assert.match(discovery, /'ACTIVE'/);
-  assert.match(discovery, /deduplicated\.slice\(0, 50\)/);
+  assert.match(discovery, /deduplicated\.slice\(0, 80\)/);
   assert.match(discovery, /friction\.state === "DIG_NOW"/);
   assert.match(discovery, /startAuditFromFriction\(triggerId\)/);
   assert.match(discovery, /recordComplete = acquired\?\.status === "EVIDENCE_QUALIFIED"/);
@@ -44,6 +44,10 @@ test("friction intake preserves the public voice and requires an explicit audit 
   assert.match(discovery, /recordComplete \? "EVIDENCE_QUALIFIED"/);
   assert.match(discovery, /SET state='ARCHIVE'.*state<>'AUDIT_STARTED'/);
   assert.match(discovery, /jurisdiction IN \('Bitcoin','Android','American'/);
+  // Usage data almost always surfaces because someone already filed a
+  // records request and published the result — this feed targets that
+  // publication event specifically, not just generic ALPR news.
+  assert.match(discovery, /%22records\+obtained%22\+OR\+%22public\+records\+request%22\+OR\+%22network\+audit%22\+OR\+FOIA/);
 });
 
 test("systematic jurisdiction survey does not require a complaint", () => {
@@ -87,6 +91,84 @@ test("national harvester produces source-led Flock deployment candidates", () =>
   assert.match(admin, /CandidateLedger/);
   assert.doesNotMatch(admin, /ACQUIRE DATA/);
   assert.match(admin, /AUTOMATIC ACQUISITION/);
+  // A fixed page cap goes stale silently as the source grows — pagination
+  // must stop on an empty/failed page, not a hardcoded count, or a future
+  // reader has no way to tell "we paginated fully" from "we gave up early."
+  assert.match(harvester, /if \(response\.ok && parsed\.length === 0\) break;/);
+  const route = fs.readFileSync(new URL("../app/api/admin/census/route.ts", import.meta.url), "utf8");
+  assert.doesNotMatch(route, /harvestNationalCandidates\(2\)/);
+});
+
+test("discovery jurisdiction resolution requires a real place signal, and auto-audit requires it be unambiguous", () => {
+  const discovery = fs.readFileSync(new URL("../lib/admin/discovery.ts", import.meta.url), "utf8");
+  // The weakest extraction branch (bare "in/near/at X") must require a
+  // trailing state — this is what stops company names and sentence
+  // fragments like "Palantir" or "Parking Lots Every" from being accepted
+  // as if they were real jurisdictions.
+  assert.ok(discovery.includes(",\\\\s*(${states}|[A-Z]{2})\\\\b`));"), "the 'located' extraction must require a trailing state, not treat it as optional");
+  assert.match(discovery, /Palantir/);
+  assert.match(discovery, /Parking\|Lots\|Every/);
+  // Actionability (auto-audit trigger, jurisdiction-qualified reporting)
+  // must require either a curated target match or an explicit state suffix
+  // — an unqualified "Richmond County" is real but ambiguous, and auditing
+  // the wrong state's county wastes a real acquisition pass.
+  assert.match(discovery, /function actionableJurisdiction/);
+  assert.match(discovery, /redDotTargets\.some\(\(target\) => target\.place === value\)/);
+  assert.match(discovery, /return stateSuffixPattern\.test\(value\);/);
+  assert.match(discovery, /const jurisdictionQualified = unique\.filter\(\(item\) => actionableJurisdiction\(item\.jurisdiction\)\)\.length;/);
+});
+
+test("the originating complaint is fetched and metric-extracted, not just recorded from its feed snippet", () => {
+  const acquisition = fs.readFileSync(new URL("../lib/admin/audit-acquisition.ts", import.meta.url), "utf8");
+  // verified/errors must exist before the friction hit is processed, so its
+  // validated source (when the fetch succeeds) can join the same array that
+  // discovered sources use for authority/observed/discrepancy detection.
+  const verifiedDeclIndex = acquisition.indexOf("const verified: ValidatedSource[] = []; const errors: string[] = [];");
+  const frictionHitIndex = acquisition.indexOf("const frictionHit: SearchHit =");
+  assert.ok(verifiedDeclIndex >= 0 && frictionHitIndex > verifiedDeclIndex, "verified/errors must be declared before the friction hit is validated");
+  assert.match(acquisition, /const frictionResult = await validateHit\(frictionHit, jurisdiction\);/);
+  assert.match(acquisition, /let source = frictionResult\.source;/);
+  // When the plain fetch fails, one rendered-browser retry before falling
+  // back — bounded to this single hit, not the whole discovery batch.
+  assert.match(acquisition, /import \{ renderPageText \} from "@\/lib\/admin\/browser-render";/);
+  assert.match(acquisition, /const rendered = await renderPageText\(frictionHit\.url\);/);
+  assert.match(acquisition, /if \(source\) \{/);
+  assert.match(acquisition, /await saveJurisdictionMetrics\(jurisdiction, source\.finalUrl, extractJurisdictionMetrics\(source\.body\), now, censusId\);/);
+  assert.match(acquisition, /verified\.push\(source\);/);
+  // Falling back to the summary-only recording when both the plain fetch
+  // and the render retry fail (e.g. an active anti-bot challenge) must
+  // remain — no regression for sources that can't be fixed by fetching harder.
+  assert.match(acquisition, /await recordEvidence\(auditId, frictionId, jurisdiction, frictionHit, "VERIFIED_COMPLAINT", frictionHit\.summary\);/);
+});
+
+test("browser rendering is scoped to what it can actually fix, and honest about what it can't test locally", () => {
+  const render = fs.readFileSync(new URL("../lib/admin/browser-render.ts", import.meta.url), "utf8");
+  assert.match(render, /import puppeteer from "@cloudflare\/puppeteer";/);
+  assert.match(render, /const binding = \(env as Record<string, unknown>\)\.BROWSER;/);
+  assert.match(render, /if \(!binding\) return null;/);
+  assert.match(render, /await puppeteer\.launch\(/);
+  // Must document the two real constraints found this session: it doesn't
+  // defeat active bot-challenges (only fixes pure-JS-rendering pages), and
+  // it's untestable in local Miniflare dev without a real Cloudflare
+  // account connection.
+  assert.match(render, /anti-bot challenges/i);
+  assert.match(render, /UNTESTED IN LOCAL DEV/);
+
+  const viteConfig = fs.readFileSync(new URL("../vite.config.ts", import.meta.url), "utf8");
+  assert.match(viteConfig, /browser: \{ binding: "BROWSER" \}/);
+});
+
+test("the site: operator is not used in queries against the Bing RSS endpoint, since it doesn't work there", () => {
+  const acquisition = fs.readFileSync(new URL("../lib/admin/audit-acquisition.ts", import.meta.url), "utf8");
+  const queriesBlock = acquisition.slice(acquisition.indexOf("function acquisitionQueries"), acquisition.indexOf("async function searchOne"));
+  assert.doesNotMatch(queriesBlock, /site:/, "site: was confirmed broken on this endpoint three separate times this session and must not be reintroduced");
+  // The .gov-restriction intent survives as ordinary keyword terms instead
+  // of a (non-functional) site: restriction.
+  assert.match(queriesBlock, /city council OR county commission OR official government website/);
+  // Digging deeper into an already-confirmed official domain has no free
+  // site:-free equivalent — kept as a keyword term (weaker, but real signal,
+  // unlike the site: version which contributed nothing).
+  assert.match(queriesBlock, /officialDomains\.map\(\(domain\) => \[`"\$\{jurisdiction\}" \$\{domain\}/);
 });
 
 test("automatic acquisition queue binds every audit to its exact national candidate", () => {
@@ -122,10 +204,59 @@ test("court/legal-action evidence is sourced from CourtListener and recorded wit
   const acquisition = fs.readFileSync(new URL("../lib/admin/audit-acquisition.ts", import.meta.url), "utf8");
   assert.match(acquisition, /LEGAL_ACTION/);
   assert.match(acquisition, /COURTLISTENER_BASE = "https:\/\/www\.courtlistener\.com"/);
-  assert.match(acquisition, /\$\{COURTLISTENER_BASE\}\/api\/rest\/v4\/search\/\?type=r&q=/);
+  assert.match(acquisition, /\$\{COURTLISTENER_BASE\}\/api\/rest\/v4\/search\/\?type=r&highlight=on&q=/);
   assert.match(acquisition, /async function courtListenerHits/);
   assert.match(acquisition, /federalCriminalCaption = \/\^united states v\\\.\/i/);
   assert.match(acquisition, /federalCriminalCaption\.test\(row\.caseName\)/);
+  assert.match(acquisition, /highlight=on/);
+  assert.match(acquisition, /if \(!technology\.test\(snippets\)\) return null;/);
+  assert.doesNotMatch(acquisition, /queries = \[`"\$\{agency\}" \(Flock OR ALPR/);
+  assert.match(acquisition, /queries = \[`"\$\{agency\}" \("Flock Safety" OR "license plate reader"\)/);
   assert.match(acquisition, /const courtHits = await courtListenerHits\(jurisdiction, candidateAgency\)/);
   assert.match(acquisition, /for \(const hit of courtHits\) await recordEvidence\(auditId, frictionId, jurisdiction, hit, "VERIFIED_AUDIT_EVIDENCE"/);
+});
+
+test("jurisdiction metrics are keyed by candidate identity, not jurisdiction string, so same-name agencies cannot overwrite each other", () => {
+  const migration = fs.readFileSync(new URL("../drizzle/0014_metric_candidate_identity.sql", import.meta.url), "utf8");
+  assert.match(migration, /ADD COLUMN `census_id` text/);
+  assert.match(migration, /DROP INDEX `admin_jurisdiction_metrics_jurisdiction_key_uidx`/);
+  assert.match(migration, /CREATE UNIQUE INDEX `admin_jurisdiction_metrics_census_key_uidx` ON `admin_jurisdiction_metrics` \(`census_id`,`metric_key`\)/);
+  assert.match(migration, /SET `census_id` = `normalized_jurisdiction` WHERE `census_id` IS NULL/);
+
+  const metrics = fs.readFileSync(new URL("../lib/admin/jurisdiction-metrics.ts", import.meta.url), "utf8");
+  assert.match(metrics, /censusId\?: string \| null/);
+  assert.match(metrics, /const identity = censusId \|\| key/);
+  assert.match(metrics, /ON CONFLICT\(census_id,metric_key\)/);
+  // A real-identity write must retire the matching fallback-keyed row in the
+  // same batch, or migrated/legacy data orphans permanently instead of
+  // self-healing as jurisdictions get reprocessed.
+  assert.match(metrics, /DELETE FROM admin_jurisdiction_metrics WHERE normalized_jurisdiction=\? AND metric_key=\? AND census_id=\?/);
+  assert.match(metrics, /if \(!censusId\) return \[insert\];/);
+
+  const acquisition = fs.readFileSync(new URL("../lib/admin/audit-acquisition.ts", import.meta.url), "utf8");
+  assert.match(acquisition, /saveJurisdictionMetrics\(jurisdiction, source, \[\{ key: "cameras_identified".*\}\], String\(row\.last_verified_at \|\| now\), censusId\)/);
+  assert.match(acquisition, /WHERE census_id=\? AND verification_status='SOURCE_VERIFIED'/);
+});
+
+test("acquisition queue claims candidates with an atomic guarded update, backs off before retrying, and classifies terminal failures", () => {
+  const migration = fs.readFileSync(new URL("../drizzle/0015_acquisition_lease_retry.sql", import.meta.url), "utf8");
+  assert.match(migration, /ADD COLUMN `acquisition_next_attempt_at` text/);
+  assert.match(migration, /ADD COLUMN `acquisition_terminal_reason` text/);
+
+  const queue = fs.readFileSync(new URL("../lib/admin/acquisition-queue.ts", import.meta.url), "utf8");
+  // The claim must be a single conditional UPDATE (status re-checked in the
+  // WHERE clause), not a separate SELECT-then-UPDATE — that's what makes two
+  // concurrent calls unable to both "win" the same candidate.
+  assert.match(queue, /const claim = await db\.prepare\(/);
+  assert.match(queue, /WHERE id=\? AND \(acquisition_status IN \('QUEUED','RETRY'\) OR \(acquisition_status='ACQUIRING' AND acquisition_started_at<=\?\)\)/);
+  assert.match(queue, /if \(!claim\.meta\?\.changes\) continue;/);
+  // Stale ACQUIRING leases (a crashed worker) must become reclaimable, not stuck forever.
+  assert.match(queue, /STALE_LEASE_MINUTES = 10/);
+  // Failures must back off and eventually reach a real terminal state, not retry forever or immediately.
+  assert.match(queue, /MAX_ACQUISITION_ATTEMPTS = 5/);
+  assert.match(queue, /function backoffMinutes/);
+  assert.match(queue, /function classifyFailure/);
+  assert.match(queue, /SOURCE_UNAVAILABLE/);
+  assert.match(queue, /FETCH_BLOCKED/);
+  assert.match(queue, /PARSE_FAILED/);
 });

@@ -24,11 +24,26 @@ export function parseAtlasCandidates(html: string): Candidate[] {
   return rows;
 }
 
-export async function harvestNationalCandidates(pages = 2) {
+// The Atlas of Surveillance's Flock Safety listing spans ~28 pages
+// nationally (verified directly against the live site, not assumed) and
+// grows over time as new deployments are documented. A fixed page cap goes
+// stale silently — the earlier hardcoded limit of 5 pages was missing over
+// 90% of the national dataset (only 4 states' worth) without ever surfacing
+// an error, since "fewer pages than exist" and "reached the end" look
+// identical from inside a bounded loop. Paginating until an empty page is
+// reached, instead of a fixed count, is what keeps this correct as the
+// source grows. MAX_PAGES is a safety ceiling against a pathological
+// response (e.g. the site always returning >0 rows due to a bug on its
+// end), not the expected stopping point.
+const MAX_PAGES = 60;
+
+export async function harvestNationalCandidates(pages = MAX_PAGES) {
   const db = getD1(); const now = new Date().toISOString(); const candidates: Candidate[] = []; const ledger: Array<{url:string;status:number;found:number}> = [];
-  for (let page = 1; page <= Math.max(1, Math.min(pages, 5)); page += 1) {
+  for (let page = 1; page <= Math.max(1, Math.min(pages, MAX_PAGES)); page += 1) {
     const url = `${ATLAS_QUERY}&page=${page}`; const response = await fetch(url, { headers: { "User-Agent": "RedDotAudit-National-Harvester/1.0", Accept: "text/html" }, signal: AbortSignal.timeout(20_000) });
     const html = response.ok ? await response.text() : ""; const parsed = response.ok ? parseAtlasCandidates(html) : []; ledger.push({ url, status: response.status, found: parsed.length }); candidates.push(...parsed);
+    if (response.ok && parsed.length === 0) break;
+    if (!response.ok) break;
   }
   const unique = [...new Map(candidates.map((row) => [`${row.agency}|${row.state}`, row])).values()];
   for (let index = 0; index < unique.length; index += 40) {

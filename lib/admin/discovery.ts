@@ -13,6 +13,19 @@ const feeds = [
   { channel: "NEWS", url: "https://news.google.com/rss/search?q=%22Flock+Safety%22+%28audit+OR+lawsuit+OR+misuse+OR+council%29+when%3A90d&hl=en-US&gl=US&ceid=US%3Aen" },
   { channel: "NEWS", url: "https://news.google.com/rss/search?q=ALPR+%28searches+OR+sharing+OR+retention+OR+access+logs%29+when%3A90d&hl=en-US&gl=US&ceid=US%3Aen" },
   { channel: "NEWS", url: "https://news.google.com/rss/search?q=Axon+%28Fusus+OR+%22Vehicle+Intelligence%22+OR+surveillance%29+when%3A30d&hl=en-US&gl=US&ceid=US%3Aen" },
+  // Usage data (search counts, outside-agency access) almost never sits on a
+  // standing public page — the actual mechanism is a journalist or advocate
+  // filing a records request for the agency's Network Audit log and
+  // publishing what it shows. This feed targets that publication event
+  // directly rather than generic ALPR news, and is what actually surfaces
+  // jurisdictions with real usage numbers already extracted by someone else
+  // (verified live: turned up "How 1 town's Flock data reached 459
+  // agencies" — the Pflugerville story already in the seed catalog — plus
+  // several other agency-specific audit stories in one test run). A wider
+  // capture window than the other feeds is deliberate: the pipeline's own
+  // 90-day staleness filter already discards anything too old on intake, so
+  // there's no cost to casting wider here and letting that filter do its job.
+  { channel: "NEWS", url: "https://news.google.com/rss/search?q=%28Flock+OR+ALPR+OR+%22license+plate+reader%22%29+%28%22records+obtained%22+OR+%22public+records+request%22+OR+%22network+audit%22+OR+FOIA%29+when%3A180d&hl=en-US&gl=US&ceid=US%3Aen" },
   { channel: "REDDIT", url: "https://www.reddit.com/search.rss?q=%22Flock%20Safety%22&sort=new" },
   { channel: "REDDIT", url: "https://www.reddit.com/search.rss?q=ALPR%20camera&sort=new" },
   { channel: "REDDIT", url: "https://www.reddit.com/search.rss?q=%22license%20plate%20reader%22&sort=new" },
@@ -29,23 +42,44 @@ function parseFeed(xml: string) { return (xml.match(/<item\b[\s\S]*?<\/item>|<en
 function hostname(url: string) { try { return new URL(url).hostname.toLowerCase().replace(/^www\./, ""); } catch { return "unknown"; } }
 function publisher(item: Item) { const host = hostname(item.url); return host.includes("news.google.com") ? clean(item.title.split(" - ").pop() || host) : host; }
 
+const states = "Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming";
+const stateSuffixPattern = new RegExp(`,\\s*(${states}|[A-Z]{2})$`);
+
 function findJurisdiction(text: string) {
   const normalized = text.toLowerCase();
   const target = [...redDotTargets].sort((a, b) => b.place.length - a.place.length).find((entry) => normalized.includes(entry.place.toLowerCase()) || normalized.includes(entry.place.replace(/,.*$/, "").toLowerCase()));
   if (target) return target.place;
-  const states = "Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming";
   const government = text.match(new RegExp(`\\b(?:City|Town|Village|County) of ([A-Z][A-Za-z.'-]+(?:\\s+[A-Z][A-Za-z.'-]+){0,2})(?:,?\\s+(${states}|[A-Z]{2}))?`));
   if (government) return [government[1], government[2]].filter(Boolean).join(", ");
   const agency = text.match(new RegExp(`\\b([A-Z][A-Za-z.'-]+(?:\\s+[A-Z][A-Za-z.'-]+){0,2})\\s+(County|Police Department|City Council|Public Safety Committee)(?:,?\\s+(${states}|[A-Z]{2}))?`));
   if (agency) return `${agency[1]}${agency[2] === "County" ? " County" : ""}${agency[3] ? `, ${agency[3]}` : ""}`;
-  const located = text.match(new RegExp(`\\b(?:in|near|around|from|at)\\s+([A-Z][a-z]+(?:\\s+[A-Z][a-z]+){0,2})(?:,\\s*(${states}|[A-Z]{2}))?`));
-  const blocked = /^(Android|Bitcoin|Reddit|Flock|Google|Police|Congress|America|American|United States|U\.S)$/i;
-  if (located && !blocked.test(located[1])) return [located[1], located[2]].filter(Boolean).join(", ");
+  // This is the weakest anchor — a bare "in/near/around/from/at X" match has
+  // no structural signal that X is even a place, let alone the right one.
+  // In practice it matched company names ("Palantir"), sentence fragments
+  // ("Parking Lots Every"), and product terms ("License Plate Reader") from
+  // real feed text. A short denylist alone doesn't scale against that, so
+  // this branch additionally requires a trailing state name/abbreviation —
+  // both because that's a real (if imperfect) place-hood signal, and because
+  // a bare, unqualified match here is ambiguous anyway (which "Richmond
+  // County"?) and not worth surfacing as if it were resolved.
+  const located = text.match(new RegExp(`\\b(?:in|near|around|from|at)\\s+([A-Z][a-z]+(?:\\s+[A-Z][a-z]+){0,2}),\\s*(${states}|[A-Z]{2})\\b`));
+  const blocked = /^(Android|Bitcoin|Reddit|Flock|Google|Police|Congress|America|American|United States|U\.S|Palantir|License|Plate|Reader|Readers|Surveillance|Privacy|Technology|Vehicle|Vehicles|Camera|Cameras|System|Systems|Software|Company|Companies|Department|Departments|Council|Committee|Program|Data|Network|Safety|Public|Parking|Lots|Every)$/i;
+  if (located && !blocked.test(located[1])) return `${located[1]}, ${located[2]}`;
   const statewide = text.match(new RegExp(`\\b(${states})\\b`));
   return statewide ? `${statewide[1]} — statewide` : "National / jurisdiction pending";
 }
 
-function actionableJurisdiction(value: string) { return value !== "National / jurisdiction pending" && !value.endsWith("— statewide") && !/^(American|America|United States|Police|Congress)$/i.test(value); }
+// A resolved jurisdiction is only trustworthy enough to auto-audit or count
+// toward "jurisdiction-qualified" reporting when it's either a known/curated
+// target (already precise) or explicitly carries a state — "Richmond County"
+// alone is real but ambiguous (Georgia? North Carolina? Virginia?), and
+// auditing the wrong one wastes a real acquisition pass on nothing.
+function actionableJurisdiction(value: string) {
+  if (value === "National / jurisdiction pending" || value.endsWith("— statewide")) return false;
+  if (/^(American|America|United States|Police|Congress)$/i.test(value)) return false;
+  if (redDotTargets.some((target) => target.place === value)) return true;
+  return stateSuffixPattern.test(value);
+}
 
 function classify(raw: Omit<Item, "jurisdiction" | "issueType" | "speakerType" | "marketingPlay" | "clusterKey">): Item {
   const text = `${raw.title} ${raw.summary}`;
@@ -111,7 +145,16 @@ export async function runDiscoveryPass(force = false) {
     } catch (error) { failedFeeds += 1; console.error("Discovery feed failed", feed.channel, error); }
   }
   const deduplicated = [...new Map(collected.map((item) => [`${clean(item.url)}|${clean(item.title)}`, item])).values()].sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0));
-  const unique = deduplicated.slice(0, 50); const groups = new Map<string, Item[]>(); for (const item of unique) groups.set(item.clusterKey, [...(groups.get(item.clusterKey) || []), item]);
+  // A pure global-recency cut is winner-take-all across feeds: a feed whose
+  // real content skews even a few weeks older than same-day generic news
+  // (like the records-request feed above, which surfaces published
+  // investigations rather than breaking news) gets systematically crowded
+  // out of every run, not just an occasional one. Raised from 50 — verified
+  // live that 50 was silently dropping every records-request-feed hit in a
+  // real run, despite the feed itself fetching correctly. Not unbounded:
+  // this still caps per-run downstream acquisition cost, just gives each of
+  // the 12 feeds realistic room to contribute rather than one favoring feed.
+  const unique = deduplicated.slice(0, 80); const groups = new Map<string, Item[]>(); for (const item of unique) groups.set(item.clusterKey, [...(groups.get(item.clusterKey) || []), item]);
   const generation = await db.prepare("SELECT id FROM admin_market_generations WHERE status IN ('ACTIVE','COMPLETED') ORDER BY created_at DESC LIMIT 1").first<{ id: string }>();
   const generationId = generation?.id || "legacy"; let signals = 0; const auditTriggers: string[] = []; const states = { WATCH: 0, DEVELOPING: 0, CAMPAIGN_READY: 0, SALE_READY: 0 };
   await db.batch([
@@ -139,7 +182,7 @@ export async function runDiscoveryPass(force = false) {
   let auditsStarted = 0; let campaignsCreated = 0;
   for (const triggerId of auditsToRun) { try { const result = await startAuditFromFriction(triggerId); auditsStarted += 1; if (result.campaign) campaignsCreated += 1; } catch (error) { console.error("Automatic jurisdiction audit failed", triggerId, error); } }
   const now = new Date().toISOString(); const campaignTotal = await db.prepare("SELECT COUNT(*) campaigns FROM admin_campaign_batches WHERE status='PROPOSED'").first<{ campaigns: number }>();
-  const jurisdictionQualified = unique.filter((item) => item.jurisdiction !== "National / jurisdiction pending").length;
+  const jurisdictionQualified = unique.filter((item) => actionableJurisdiction(item.jurisdiction)).length;
   const receipt = { generationId, totalFeeds: feeds.length, checkedFeeds, failedFeeds, fetchedItems, deduplicatedItems: deduplicated.length, batchSize: unique.length, relevant: unique.length, jurisdictionQualified, rejected, clusters: groups.size, auditsStarted, campaignsCreated, states };
   await db.prepare("INSERT INTO admin_activity_log (id,actor,event_type,entity_type,summary,metadata_json,created_at) VALUES (?,?,'DISCOVERY_PASS_COMPLETED','RADAR_DISCOVERY',?,?,?)").bind(crypto.randomUUID(), "SYSTEM", `${checkedFeeds}/${feeds.length} feeds succeeded; ${fetchedItems} items read; ${unique.length} relevant; ${jurisdictionQualified} jurisdiction-qualified.`, JSON.stringify(receipt), now).run();
   return { skipped: false, feeds: checkedFeeds, failedFeeds, fetchedItems, deduplicatedItems: deduplicated.length, batchSize: unique.length, candidates: unique.length, jurisdictionQualified, auditsStarted, campaignsCreated, rejected, signals, go: states.CAMPAIGN_READY + states.SALE_READY, hold: states.WATCH + states.DEVELOPING, watch: states.WATCH, developing: states.DEVELOPING, campaignReady: states.CAMPAIGN_READY, saleReady: states.SALE_READY, campaigns: Number(campaignTotal?.campaigns || 0) + campaignsCreated };
@@ -154,10 +197,10 @@ export async function startAuditFromFriction(id: string, censusId?: string) {
   const liveUrls = JSON.parse(String(friction.source_urls_json || "[]")) as string[];
   const canonical = canonicalItems().filter((item) => item.jurisdiction === jurisdiction);
   const target = redDotTargets.find((item) => item.place === jurisdiction);
-  if (target?.sources[0]?.url) { const explicit = (target.publicMetrics || []).map((metric) => ({ key: clean(metric.label).replace(/\s+/g, "_"), value: metric.value, label: metric.label.toUpperCase() })); const extracted = extractJurisdictionMetrics(`${target.teaser} ${target.control} ${target.observed} ${target.evidence.join(" ")}`); const facts = [...new Map([...explicit, ...extracted].map((fact) => [fact.key, fact])).values()]; await saveJurisdictionMetrics(jurisdiction, target.sources[0].url, facts, target.evidenceDate || now); }
+  if (target?.sources[0]?.url) { const explicit = (target.publicMetrics || []).map((metric) => ({ key: clean(metric.label).replace(/\s+/g, "_"), value: metric.value, label: metric.label.toUpperCase() })); const extracted = extractJurisdictionMetrics(`${target.teaser} ${target.control} ${target.observed} ${target.evidence.join(" ")}`); const facts = [...new Map([...explicit, ...extracted].map((fact) => [fact.key, fact])).values()]; await saveJurisdictionMetrics(jurisdiction, target.sources[0].url, facts, target.evidenceDate || now, censusId); }
   const liveItems: Item[] = liveUrls.map((url) => ({ title: String(friction.complaint_summary), summary: String(friction.complaint_summary), url, publishedAt: String(friction.published_at || now), channel: String(friction.channel), jurisdiction, issueType, speakerType: String(friction.voice_type), marketingPlay: String(friction.channel) === "REDDIT" ? "SOCIAL · LOCAL EVIDENCE INVITATION" : "PROFESSIONAL EMAIL · LOCAL ATTORNEYS / JOURNALISTS / ADVOCATES", clusterKey }));
   const items = [...liveItems, ...canonical];
-  const metricRow = await db.prepare("SELECT COUNT(*) count FROM admin_jurisdiction_metrics WHERE normalized_jurisdiction=? AND verification_status='SOURCE_VERIFIED'").bind(clean(jurisdiction)).first<{ count: number }>();
+  const metricRow = await db.prepare("SELECT COUNT(*) count FROM admin_jurisdiction_metrics WHERE census_id=? AND verification_status='SOURCE_VERIFIED'").bind(censusId || clean(jurisdiction)).first<{ count: number }>();
   const contact = await db.prepare("SELECT 1 found FROM admin_official_contacts WHERE normalized_jurisdiction=? AND status='VERIFIED' LIMIT 1").bind(clean(jurisdiction)).first();
   const acquiredUrls = (() => { try { return JSON.parse(String(acquired?.source_urls_json || "[]")) as string[]; } catch { return []; } })(); const metricCount = Number(metricRow?.count || 0); const sourceCount = Number(acquired?.source_count || 0); const independent = new Set(acquiredUrls.map((url) => hostname(url))).size;
   const authority = acquired?.authority_text ? 20 : 0; const observed = acquired?.observed_text ? 20 : 0; const discrepancy = acquired?.discrepancy_text ? 20 : 0; const metricStrength = Math.min(20, metricCount * 5); const provenance = Math.min(15, Number(acquired?.source_count || 0) * 3); const contactScore = contact ? 5 : 0; const auditScore = authority + observed + discrepancy + metricStrength + provenance + contactScore;
